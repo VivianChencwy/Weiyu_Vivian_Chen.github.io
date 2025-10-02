@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weiyu's Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Load Font Awesome icons for contact buttons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-cJI1ezbba79q0aMvSb18/SrdEU5s55g7I1H7heq8FhS0Y3m1aNEnu4WS6m0NHKzYi1ZKhw1+6T0uBzF+jYzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+  <!-- Header / Hero section -->
+  <header class="hero">
+    <img src="assets/avatar.png" alt="Avatar" class="avatar">
+    <div class="hero-text">
+      <h1>Hey there! I’m Weiyu</h1>
+      <p>
+        I’m a final‑year Information Engineering undergraduate at SUSTech with a passion for <strong>human‑centred AI</strong>,
+        <strong>rehabilitation robotics</strong> and <strong>brain–computer interfaces</strong>. My recent work focuses on decoding EEG/EMG
+        signals using machine learning to enhance assistive technologies. I’ve contributed to <em>cross‑subject EEG recognition
+        frameworks</em>, <em>attention‑based models for rehabilitation robotics</em> and international collaborations with UCSD and
+        King’s College London. I’m currently seeking PhD opportunities to explore how AI and biosignal decoding can advance
+        healthcare and human–computer interaction.
+      </p>
+    </div>
+  </header>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Cards will be injected here by script.js -->
+    </div>
+  </section>
+
+  <!-- Modal for project details -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="modalClose" class="close">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDescription"></p>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="tabs">
+      <button class="tab active" data-category="programming">Programming</button>
+      <button class="tab" data-category="hardware">Hardware</button>
+      <button class="tab" data-category="tools">Tools</button>
+    </div>
+    <div class="skills-list" id="skillsList">
+      <!-- Skills will be injected here by script.js -->
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/vivianchencwy" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/VivianChencwy" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub</a>
+      <a href="mailto:weiyu@example.com" class="contact-link"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
