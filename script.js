@@ -82,9 +82,9 @@ const courseProjects = [
   {
     id: 'pokesnap',
     title: 'PokeSnap',
-    summary: '一个能够识别宝可梦的智能相机',
+    summary: `An intelligent camera application capable of recognising Pokémon`,
     github: 'https://github.com/VivianChencwy/PokeSnap',
-    description: `一个能够识别宝可梦的智能相机应用，使用计算机视觉技术识别和分类宝可梦角色。`,
+    description: `An intelligent camera application capable of recognising Pokémon, utilising computer vision technology to identify and classify Pokémon characters.`,
     details: ''
   },
   {
