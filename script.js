@@ -46,7 +46,7 @@ const courseProjects = [
     title: 'RRT Motion Planner',
     summary: 'Rapidly‑exploring random tree motion planner for a manipulator.',
     image: 'figures/RRT Motion Planner.png',
-    github: 'https://github.com/VivianChencwy/RRT_Motion_Planner',
+    github: 'https://github.com/VivianChencwy/RRT_arm_Planner',
     description: `Course project implementing a rapidly‑exploring random tree (RRT) algorithm to plan collision‑free paths for a robotic arm.`,
     details: `**Highlights**\n\n` +
              `Built a motion planner capable of exploring high‑dimensional configuration spaces and generating feasible trajectories for a 6‑DOF manipulator.`
@@ -66,7 +66,7 @@ const courseProjects = [
     title: 'Vision‑Controlled Vibrating Robot',
     summary: 'Vibrating robot controlled via computer vision.',
     image: 'figures/Vision-Controlled Vibrating Robot.png',
-    github: 'https://github.com/VivianChencwy/Vision_Controlled_Vibrating_Robot',
+    github: 'https://github.com/VivianChencwy/Micro_Vibration_Robot',
     description: `Created a robot that uses computer‑vision feedback to control a vibrating platform for remote exploration and manipulation tasks.`,
     details: `**Project Goals**\n\n` +
              `Developed algorithms to track visual markers and adjust vibration patterns in real time, enabling closed‑loop control.`
