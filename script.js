@@ -70,30 +70,6 @@ const courseProjects = [
     description: `Created a robot that uses computer‑vision feedback to control a vibrating platform for remote exploration and manipulation tasks.`,
     details: `**Project Goals**\n\n` +
              `Developed algorithms to track visual markers and adjust vibration patterns in real time, enabling closed‑loop control.`
-  },
-  {
-    id: 'sim-lan',
-    title: 'Sim_LAN',
-    summary: 'Local area network simulation project.',
-    github: 'https://github.com/VivianChencwy/Sim_LAN',
-    description: `Simulated the design and performance of a local area network, analysing throughput, latency and fault tolerance.`,
-    details: ''
-  },
-  {
-    id: 'pokesnap',
-    title: 'PokeSnap',
-    summary: `An intelligent camera application capable of recognising Pokémon`,
-    github: 'https://github.com/VivianChencwy/PokeSnap',
-    description: `An intelligent camera application capable of recognising Pokémon, utilising computer vision technology to identify and classify Pokémon characters.`,
-    details: ''
-  },
-  {
-    id: 'mobile-robot',
-    title: 'Mobile Robot Navigation & Control',
-    summary: 'Navigation and control algorithms for a mobile robot.',
-    github: 'https://github.com/VivianChencwy/Mobile_Robot_Navigation_Control',
-    description: `Implemented navigation, mapping and control algorithms for an autonomous mobile robot as part of a course project.`,
-    details: ''
   }
 ];
 
@@ -186,6 +162,24 @@ function openModal(projectId, projectType) {
   if (!project) return;
   
   document.getElementById('modalTitle').textContent = project.title;
+  
+  // Add project image below title if available
+  const modalContent = document.querySelector('.modal-content');
+  let existingImage = modalContent.querySelector('.modal-image');
+  if (existingImage) {
+    existingImage.remove();
+  }
+  
+  if (project.image) {
+    const modalImage = document.createElement('div');
+    modalImage.className = 'modal-image';
+    modalImage.innerHTML = `<img src="${project.image}" alt="${project.title}" />`;
+    
+    // Insert after title
+    const modalTitle = document.getElementById('modalTitle');
+    modalTitle.parentNode.insertBefore(modalImage, modalTitle.nextSibling);
+  }
+  
   document.getElementById('modalDescription').textContent = project.description;
   const detailsContainer = document.getElementById('modalDetails');
   detailsContainer.innerHTML = '';
