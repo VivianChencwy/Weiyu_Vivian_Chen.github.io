@@ -27,21 +27,20 @@ const researchProjects = [
              `• Develop two core subsystems: (1) an IMU‑based dynamic pose tracker for real‑time monitoring of C‑arm movement and (2) a motor‑based haptic force feedback system simulating tactile resistance.\n\n` +
              `**Role & Duration**\n\n` +
              `Jul 2024 – Aug 2024 — Core developer for sensing and feedback systems: designed and implemented the IMU pose‑tracking module and built a motor‑based haptic feedback system.`
-  }
-];
-
-const courseProjects = [
+  },
   {
     id: 'analog-ic',
     title: 'Automated Analog IC Layout System',
     summary: 'Automated layout generation for matched resistors and capacitors.',
     image: 'figures/Automated Analog IC Layout System(1).png',
-    github: 'https://github.com/VivianChencwy/Automated_Analog_IC_Layout_System',
     description: `This project tackles the problem of device mismatch in analog integrated circuits by developing an automated layout generation system for matched resistors and capacitors.\n\n` +
                  `Process variation can severely degrade circuit performance in precision modules such as differential amplifiers, current mirrors and filters. The proposed system automates the creation of symmetrical layouts, reducing mismatch and improving yield.`,
     details: `**Overview**\n\n` +
              `The automated layout tool produces symmetrical placements and routings for matched components, helping analog designers mitigate mismatch without manual intervention.`
-  },
+  }
+];
+
+const courseProjects = [
   {
     id: 'rrt-motion',
     title: 'RRT Motion Planner',
@@ -83,9 +82,9 @@ const courseProjects = [
   {
     id: 'pokesnap',
     title: 'PokeSnap',
-    summary: 'Pokémon‑themed snapshot game.',
+    summary: '一个能够识别宝可梦的智能相机',
     github: 'https://github.com/VivianChencwy/PokeSnap',
-    description: `A playful game where players capture and identify Pokémon‑like creatures using a camera interface.`,
+    description: `一个能够识别宝可梦的智能相机应用，使用计算机视觉技术识别和分类宝可梦角色。`,
     details: ''
   },
   {
