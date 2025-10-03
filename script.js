@@ -1,4 +1,3 @@
-// Data definitions
 const researchProjects = [
   {
     id: 'sta-tcn',
@@ -94,7 +93,6 @@ const skills = {
   ]
 };
 
-// Helper functions
 function createCard(project) {
   const card = document.createElement('div');
   card.className = 'card';
@@ -102,7 +100,6 @@ function createCard(project) {
   
   let cardHTML = '';
   
-  // Add image if available
   if (project.image) {
     cardHTML += `<div class="card-image"><img src="${project.image}" alt="${project.title}" /></div>`;
   }
@@ -113,7 +110,6 @@ function createCard(project) {
       <div class="card-summary">${project.summary}</div>
   `;
   
-  // Add GitHub link for course projects
   if (project.github) {
     cardHTML += `<div class="card-github"><a href="${project.github}" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> View on GitHub</a></div>`;
   }
@@ -163,7 +159,6 @@ function openModal(projectId, projectType) {
   
   document.getElementById('modalTitle').textContent = project.title;
   
-  // Add project image below title if available
   const modalContent = document.querySelector('.modal-content');
   let existingImage = modalContent.querySelector('.modal-image');
   if (existingImage) {
@@ -175,7 +170,6 @@ function openModal(projectId, projectType) {
     modalImage.className = 'modal-image';
     modalImage.innerHTML = `<img src="${project.image}" alt="${project.title}" />`;
     
-    // Insert after title
     const modalTitle = document.getElementById('modalTitle');
     modalTitle.parentNode.insertBefore(modalImage, modalTitle.nextSibling);
   }
@@ -184,7 +178,6 @@ function openModal(projectId, projectType) {
   const detailsContainer = document.getElementById('modalDetails');
   detailsContainer.innerHTML = '';
   
-  // Add GitHub link in modal for course projects
   if (project.github) {
     const githubLink = document.createElement('div');
     githubLink.className = 'modal-github';
@@ -193,10 +186,8 @@ function openModal(projectId, projectType) {
   }
   
   if (project.details) {
-    // Convert markdown‑like line breaks to paragraphs
     project.details.split(/\n\n/).forEach(section => {
       const p = document.createElement('p');
-      // replace bullet points with HTML lists where appropriate
       if (section.trim().startsWith('•')) {
         const ul = document.createElement('ul');
         section.split(/\n/).forEach(line => {
@@ -206,7 +197,6 @@ function openModal(projectId, projectType) {
         });
         detailsContainer.appendChild(ul);
       } else {
-        // bold headings indicated by **Heading**
         const html = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         p.innerHTML = html;
         detailsContainer.appendChild(p);
@@ -225,7 +215,6 @@ function setupModal() {
   const closeBtn = document.getElementById('modalClose');
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
-    // Close when clicking outside the content
     if (e.target === modal) closeModal();
   });
 }
@@ -240,11 +229,9 @@ function setupTabs() {
       populateSkills(category);
     });
   });
-  // Initialize default category
   populateSkills('programming');
 }
 
-// Initialise on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   populateProjects();
   setupModal();
