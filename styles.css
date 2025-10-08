@@ -184,13 +184,14 @@ section {
 }
 
 .contact-full input,
-.contact-full textarea,
-.contact-full button {
+.contact-full textarea {
   width: 100%;
 }
 
 .contact-full button {
-  grid-column: 1 / -1;
+  grid-column: 2 / 3;
+  justify-self: start;
+  width: auto;
 }
 
 #projects h2 {
@@ -427,7 +428,7 @@ section {
 }
 
 .contact-link:hover {
-  background-color: #a78bfa; /* darker violet */
+  background-color: #5c27f9; /* darker violet */
 }
 
 .contact-link i {
