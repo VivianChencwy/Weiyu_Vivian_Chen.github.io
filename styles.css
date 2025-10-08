@@ -1,5 +1,5 @@
 html {
-  --color-accent: oklch(65% 50% 0);
+  --color-accent: #c4b5fd; /* light violet */
 }
 
 * {
@@ -63,7 +63,7 @@ body {
 }
 
 .nav-container a:hover {
-  background-color: oklch(95% 1% 200);
+  background-color: #ede9fe;
   color: var(--color-accent);
 }
 
@@ -146,7 +146,7 @@ section {
 }
 
 .contact-form input, .contact-form textarea {
-  border: 1px solid oklch(80% 3% 200);
+  border: 1px solid #d6d3f0;
   border-radius: 4px;
   padding: 0.5em;
 }
@@ -161,7 +161,7 @@ section {
 }
 
 .contact-form button:hover {
-  background-color: oklch(55% 50% 0);
+  background-color: #a78bfa;
 }
 
 .contact-page {
@@ -170,11 +170,17 @@ section {
   padding: 0;
 }
 
+.contact-page main {
+  max-width: none;
+  margin: 0;
+  padding: 2rem 1.25rem;
+}
+
 .contact-full {
   grid-template-columns: 8rem 1fr;
-  max-width: none;
-  width: 100vw;
-  padding: 2rem 2rem 0 2rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
 }
 
 .contact-full input,
@@ -414,14 +420,14 @@ section {
   gap: 0.5rem;
   padding: 0.6rem 1rem;
   border-radius: 4px;
-  background-color: #0077cc;
+  background-color: var(--color-accent);
   color: #fff;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
 .contact-link:hover {
-  background-color: #005fa3;
+  background-color: #a78bfa; /* darker violet */
 }
 
 .contact-link i {
