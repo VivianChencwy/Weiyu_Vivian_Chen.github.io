@@ -101,7 +101,9 @@ function createCard(project) {
   let cardHTML = '';
   
   if (project.image) {
-    cardHTML += `<div class="card-image"><img src="${project.image}" alt="${project.title}" /></div>`;
+    const isInProjectsPage = location.pathname.endsWith('/projects/') || location.pathname.endsWith('/projects/index.html');
+    const imgSrc = isInProjectsPage ? `../${project.image}` : project.image;
+    cardHTML += `<div class="card-image"><img src="${imgSrc}" alt="${project.title}" /></div>`;
   }
   
   cardHTML += `
@@ -124,16 +126,21 @@ function createCard(project) {
 function populateProjects() {
   const researchGrid = document.getElementById('researchProjectsGrid');
   const courseGrid = document.getElementById('courseProjectsGrid');
-  
-  researchProjects.forEach(project => {
-    const card = createCard(project);
-    researchGrid.appendChild(card);
-  });
-  
-  courseProjects.forEach(project => {
-    const card = createCard(project);
-    courseGrid.appendChild(card);
-  });
+  if (!researchGrid && !courseGrid) return;
+
+  if (researchGrid) {
+    researchProjects.forEach(project => {
+      const card = createCard(project);
+      researchGrid.appendChild(card);
+    });
+  }
+
+  if (courseGrid) {
+    courseProjects.forEach(project => {
+      const card = createCard(project);
+      courseGrid.appendChild(card);
+    });
+  }
 }
 
 function populateSkills(category) {
@@ -166,9 +173,11 @@ function openModal(projectId, projectType) {
   }
   
   if (project.image) {
+    const isInProjectsPage = location.pathname.endsWith('/projects/') || location.pathname.endsWith('/projects/index.html');
+    const imgSrc = isInProjectsPage ? `../${project.image}` : project.image;
     const modalImage = document.createElement('div');
     modalImage.className = 'modal-image';
-    modalImage.innerHTML = `<img src="${project.image}" alt="${project.title}" />`;
+    modalImage.innerHTML = `<img src="${imgSrc}" alt="${project.title}" />`;
     
     const modalTitle = document.getElementById('modalTitle');
     modalTitle.parentNode.insertBefore(modalImage, modalTitle.nextSibling);
@@ -213,6 +222,7 @@ function closeModal() {
 function setupModal() {
   const modal = document.getElementById('modal');
   const closeBtn = document.getElementById('modalClose');
+  if (!modal || !closeBtn) return;
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();

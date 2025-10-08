@@ -5,15 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume - Weiyu's Portfolio</title>
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="../">Home</a></li>
-      <li><a href="../projects/">Projects</a></li>
-      <li><a href="./" class="current">Resume</a></li>
-      <li><a href="../#contact">Contact</a></li>
-    </ul>
+  <nav class="main-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="../">Weiyu Chen</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="../">Home</a></li>
+        <li><a href="../projects/">Projects</a></li>
+        <li><a href="./" class="current">Resume</a></li>
+        <li><a href="../contact/">Contact</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main>
@@ -35,6 +42,23 @@
         <li>EEG/EMG signal processing</li>
         <li>Machine learning for assistive technologies</li>
       </ul>
+    </section>
+
+    <section class="cv-section">
+      <h2>Research Experience</h2>
+      <div class="experience-item">
+        <h3>STA-TCN: Neural Decoder for Upper Limb Rehabilitation</h3>
+        <p class="role">Project Leader & First Author</p>
+        <p class="duration">Sep 2024 – Apr 2025</p>
+        <p>Led model design, conducted experiments and data analysis for continuous motion prediction using sEMG signals for cable-driven exoskeletons.</p>
+      </div>
+      
+      <div class="experience-item">
+        <h3>Robotic Catheter System for Cardiac Ablation</h3>
+        <p class="role">Core Developer</p>
+        <p class="duration">Jul 2024 – Aug 2024</p>
+        <p>Designed and implemented IMU pose-tracking module and built motor-based haptic feedback system.</p>
+      </div>
     </section>
 
     <section class="cv-section">

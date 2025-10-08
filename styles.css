@@ -1,76 +1,160 @@
-/* Basic styles from Lab 1 */
 html {
   --color-accent: oklch(65% 50% 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
+  color: #333;
+  background-color: #fafafa;
   max-width: 100ch;
   margin-inline: auto;
   padding: 1em;
 }
 
-/* Step 2: Navigation bar styling */
-nav ul, nav li {
+.main-nav {
+  background-color: #fff;
+  border-bottom: 1px solid oklch(80% 3% 200);
+  margin: -1em -1em 2em -1em;
+  padding: 0 1em;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100ch;
+  margin: 0 auto;
+  padding: 1em 0;
+}
+
+.nav-brand a {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.nav-links {
   display: contents;
 }
 
-nav {
-  display: flex;
-  margin-bottom: 2em;
-  border-bottom: 1px solid oklch(80% 3% 200);
+.nav-links li {
+  display: contents;
 }
 
-nav a {
-  flex: 1;
+.nav-container ul {
+  display: flex;
+  gap: 2em;
+}
+
+.nav-container a {
   text-decoration: none;
   color: inherit;
-  text-align: center;
-  padding: 0.5em;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200);
-  padding-bottom: 0.1em;
-}
-
-nav a:hover {
+.nav-container a:hover {
   background-color: oklch(95% 1% 200);
   color: var(--color-accent);
 }
 
-/* Step 3: Contact form layout */
-form {
+.nav-container a.current {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5rem;
+  color: #222;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+section {
+  padding: 2rem 0;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e6e6;
+  max-width: 960px;
+  margin: 0 auto 2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ddd;
+  margin-left: 2rem;
+}
+
+.hero-text {
+  padding-right: 2rem;
+}
+
+.hero-text p {
+  margin-top: 0.5rem;
+  max-width: 600px;
+}
+
+.contact-form {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1em;
+  margin-bottom: 2em;
 }
 
-form label {
+.contact-form label {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
 }
 
-form button {
+.contact-form button {
   grid-column: 1 / -1;
   justify-self: start;
 }
 
-form input, form textarea, form button {
+.contact-form input, .contact-form textarea, .contact-form button {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
 }
 
-form input, form textarea {
+.contact-form input, .contact-form textarea {
   border: 1px solid oklch(80% 3% 200);
   border-radius: 4px;
   padding: 0.5em;
 }
 
-form button {
+.contact-form button {
   background-color: var(--color-accent);
   color: white;
   border: none;
@@ -79,15 +163,22 @@ form button {
   cursor: pointer;
 }
 
-form button:hover {
+.contact-form button:hover {
   background-color: oklch(55% 50% 0);
 }
 
-/* Step 4: Projects page styling */
-.projects {
+#projects h2 {
+  margin-bottom: 1rem;
+}
+
+#projects h2:not(:first-of-type) {
+  margin-top: 2rem;
+}
+
+.projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  gap: 1em;
+  gap: 1rem;
 }
 
 .projects article {
@@ -100,17 +191,233 @@ form button:hover {
   margin: 0;
 }
 
-/* Step 4.4: Heading improvements */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1;
-  text-wrap: balance;
+.card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-h1 {
-  font-size: 400%;
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Step 5: CV page styling */
+.card-image {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.card-summary {
+  font-size: 0.9rem;
+  color: #555;
+  flex: 1;
+  margin-bottom: 0.5rem;
+}
+
+.card-github {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.card-github a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0077cc;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.card-github a:hover {
+  text-decoration: underline;
+}
+
+.card-github i {
+  font-size: 1rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.close:hover {
+  color: #333;
+}
+
+.modal-github {
+  margin-bottom: 1rem;
+}
+
+.modal-github a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: 1px solid #0077cc;
+  border-radius: 4px;
+}
+
+.modal-github a:hover {
+  background-color: #0077cc;
+  color: #fff;
+}
+
+.modal-image {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.modal-image img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#skills h2 {
+  margin-bottom: 1rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #444;
+}
+
+.tab i {
+  font-size: 0.9rem;
+}
+
+.tab.active {
+  background-color: #0077cc;
+  color: #fff;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.skill-item i {
+  font-size: 1rem;
+  color: #0077cc;
+}
+
+#contact h2 {
+  margin-bottom: 1rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  background-color: #0077cc;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.contact-link:hover {
+  background-color: #005fa3;
+}
+
+.contact-link i {
+  font-size: 1.2rem;
+}
+
 .cv-section {
   margin-bottom: 2em;
   padding: 1.5em;
@@ -142,12 +449,47 @@ h1 {
   text-decoration: underline;
 }
 
-/* Main content spacing */
+.experience-item {
+  margin-bottom: 1.5rem;
+}
+
+.experience-item h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.experience-item .role {
+  font-weight: bold;
+  color: var(--color-accent);
+  margin-bottom: 0.25rem;
+}
+
+.experience-item .duration {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
 main {
   margin-top: 1em;
 }
 
-/* Enhance sections */
-section {
-  margin-bottom: 1.5em;
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .avatar {
+    margin-left: 0;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-container ul {
+    gap: 1rem;
+  }
 }
