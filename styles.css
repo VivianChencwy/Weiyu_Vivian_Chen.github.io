@@ -1,5 +1,6 @@
 html {
-  --color-accent: #c4b5fd; /* light violet */
+  --color-accent: #c4b5fd;
+  color-scheme: light;
 }
 
 * {
@@ -16,6 +17,216 @@ body {
   max-width: 100ch;
   margin-inline: auto;
   padding: 1em;
+}
+
+
+html.dark-mode {
+  --color-accent: #8b7ab8; 
+}
+
+html.dark-mode body {
+  background-color: #1a0d2e; 
+  color: #ffffff;
+}
+
+html.dark-mode .main-nav {
+  background-color: #2d1b69; 
+}
+
+html.dark-mode .nav-container a {
+  color: #ffffff;
+}
+
+html.dark-mode .nav-container a:hover {
+  background-color: #4a2b9e;
+  color: #c4b5fd;
+}
+
+html.dark-mode .nav-container a.current {
+  background-color: #4a2b9e;
+  color: #ffffff;
+}
+
+html.dark-mode .hero {
+  background-color: #2d1b69;
+  border-bottom-color: #4a2b9e;
+}
+
+html.dark-mode .hero-text p {
+  color: #ffffff;
+}
+
+html.dark-mode .hero-text strong {
+  color: #c4b5fd;
+}
+
+html.dark-mode .hero-text em {
+  color: #e0e0e0;
+}
+
+html.dark-mode .card {
+  background-color: #2d1b69;
+  border-color: #4a2b9e;
+}
+
+html.dark-mode .card-title {
+  color: #ffffff;
+}
+
+html.dark-mode .card-summary {
+  color: #e0e0e0;
+}
+
+html.dark-mode .card-github a {
+  color: #c4b5fd;
+}
+
+html.dark-mode .card-github a:hover {
+  color: #ffffff;
+}
+
+html.dark-mode .modal {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+html.dark-mode .modal-content {
+  background-color: #2d1b69;
+  color: #ffffff;
+}
+
+html.dark-mode .modal-github a {
+  color: #c4b5fd;
+  border-color: #c4b5fd;
+}
+
+html.dark-mode .modal-github a:hover {
+  background-color: #c4b5fd;
+  color: #2d1b69;
+}
+
+html.dark-mode .close {
+  color: #ffffff;
+}
+
+html.dark-mode .close:hover {
+  color: #c4b5fd;
+}
+
+html.dark-mode .cv-section {
+  background-color: #2d1b69;
+}
+
+html.dark-mode .cv-section h2 {
+  color: #c4b5fd;
+}
+
+html.dark-mode .cv-section a {
+  color: #c4b5fd;
+}
+
+html.dark-mode .cv-section a:hover {
+  color: #ffffff;
+}
+
+html.dark-mode .experience-item h3 {
+  color: #ffffff;
+}
+
+html.dark-mode .experience-item .role {
+  color: #c4b5fd;
+}
+
+html.dark-mode .experience-item .duration {
+  color: #e0e0e0;
+}
+
+html.dark-mode .tab {
+  background-color: #2d1b69;
+  color: #ffffff;
+}
+
+html.dark-mode .tab.active {
+  background-color: #4a2b9e;
+  color: #ffffff;
+}
+
+html.dark-mode .tab:not(.active):hover {
+  background-color: #4a2b9e;
+}
+
+html.dark-mode .contact-form input,
+html.dark-mode .contact-form textarea {
+  background-color: #4a2b9e;
+  color: #ffffff;
+  border-color: #4a2b9e;
+}
+
+html.dark-mode .contact-form button {
+  background-color: #4a2b9e;
+}
+
+html.dark-mode .contact-form button:hover {
+  background-color: #5b3cc4;
+}
+
+html.dark-mode .contact-link {
+  background-color: #4a2b9e;
+}
+
+html.dark-mode .contact-link:hover {
+  background-color: #5b3cc4;
+}
+
+html.dark-mode .skill-item {
+  background-color: #4a2b9e;
+  color: #ffffff;
+}
+
+html.dark-mode .skill-item i {
+  color: #c4b5fd;
+}
+
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode h5,
+html.dark-mode h6 {
+  color: #ffffff;
+}
+
+/* Color scheme switcher styles */
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  font-family: inherit;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.color-scheme select {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.3em 0.5em;
+  border-radius: 4px;
+  border: 1px solid #d6d3f0;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Dark mode adjustments for switcher */
+html.dark-mode .color-scheme {
+  color: #ffffff;
+}
+
+html.dark-mode .color-scheme select {
+  background-color: #4a2b9e;
+  color: #ffffff;
+  border-color: #4a2b9e;
 }
 
 .main-nav {
