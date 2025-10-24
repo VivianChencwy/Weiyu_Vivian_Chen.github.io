@@ -22,12 +22,21 @@ export async function fetchJSON(url) {
 export function renderProjects(projects, container, headingLevel = 'h2') {
   container.innerHTML = '';
   
+  const isInSubfolder = location.pathname.includes('/projects/') || 
+                        location.pathname.includes('/resume/') || 
+                        location.pathname.includes('/contact/');
+  
   projects.forEach(project => {
     const article = document.createElement('article');
     
+    let imageSrc = project.image;
+    if (imageSrc && !imageSrc.startsWith('http')) {
+      imageSrc = isInSubfolder ? `../${imageSrc}` : imageSrc;
+    }
+    
     article.innerHTML = `
       <${headingLevel}>${project.title}</${headingLevel}>
-      ${project.image ? `<img src="${project.image}" alt="${project.title}" />` : ''}
+      ${imageSrc ? `<img src="${imageSrc}" alt="${project.title}" />` : ''}
       <p>${project.description}</p>
     `;
     

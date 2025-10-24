@@ -3,73 +3,72 @@
     "title": "STA-TCN: Neural Decoder for Upper Limb Rehabilitation",
     "year": 2024,
     "image": "figures/STA-TCN Neural Decoder for Upper Limb Rehabilitation.png",
-    "description": "Continuous motion prediction using sEMG for cable-driven exoskeletons. A Spatio-Temporal Attention and lightweight Temporal Convolutional Network (STA-TCN) architecture for subject-independent, real-time estimation of elbow joint angles."
+    "description": "Deep learning architecture for continuous motion prediction using surface electromyography (sEMG) signals. Implements Spatio-Temporal Attention and lightweight Temporal Convolutional Network for subject-independent, real-time estimation of elbow joint angles in cable-driven exoskeletons."
   },
   {
     "title": "Robotic Catheter System for Cardiac Ablation",
     "year": 2024,
     "image": "figures/Robotic Catheter System for Cardiac Ablation.png",
-    "description": "Robot-assisted catheter ablation system improving precision, safety and feedback. Development of a robot ablation catheter system for cardiac ablation therapy, aimed at improving the precision, safety and usability of catheter-based treatments for atrial fibrillation."
-  },
-  {
-    "title": "Automated Analog IC Layout System",
-    "year": 2023,
-    "image": "figures/Automated Analog IC Layout System(1).png",
-    "description": "Automated layout generation for matched resistors and capacitors. This project tackles the problem of device mismatch in analog integrated circuits by developing an automated layout generation system."
+    "description": "Advanced robot-assisted catheter ablation system for cardiac procedures. Features IMU-based dynamic pose tracking for real-time C-arm movement monitoring and motor-based haptic force feedback system for enhanced precision and safety in atrial fibrillation treatments."
   },
   {
     "title": "RRT Motion Planner",
     "year": 2023,
     "image": "figures/RRT Motion Planner.png",
-    "description": "Rapidly-exploring random tree motion planner for a manipulator. Course project implementing a rapidly-exploring random tree (RRT) algorithm to plan collision-free paths for a robotic arm."
+    "description": "Rapidly-Exploring Random Tree (RRT) algorithm implementation for robotic manipulator path planning. Capable of exploring high-dimensional configuration spaces and generating collision-free trajectories for 6-DOF robotic arms in complex environments."
+  },
+  {
+    "title": "Micro Vibration Robot",
+    "year": 2022,
+    "image": "figures/Vision-Controlled Vibrating Robot.png",
+    "description": "Vision-controlled vibrating robot platform using computer vision feedback for precise control. Implements real-time visual marker tracking and adaptive vibration pattern adjustment for remote exploration and manipulation tasks in constrained spaces."
   },
   {
     "title": "Fynthesizer",
     "year": 2023,
     "image": "figures/Fynthesizer.jpg",
-    "description": "Modular audio synthesizer. Designed and built a small audio synthesizer as a course project, focusing on modular sound generation and signal processing."
+    "description": "Modular audio synthesizer with integrated oscillators, filters and envelope generators. Features microcontroller-based sequencing and parameter control for versatile sound generation and real-time signal processing capabilities."
   },
   {
-    "title": "Vision-Controlled Vibrating Robot",
-    "year": 2022,
-    "image": "figures/Vision-Controlled Vibrating Robot.png",
-    "description": "Vibrating robot controlled via computer vision. Created a robot that uses computer-vision feedback to control a vibrating platform for remote exploration and manipulation tasks."
+    "title": "Automated Analog IC Layout System",
+    "year": 2023,
+    "image": "figures/Automated Analog IC Layout System(1).png",
+    "description": "Automated layout generation tool for matched analog components in integrated circuits. Produces symmetrical placements and routings for resistors and capacitors to minimize device mismatch in precision analog modules like differential amplifiers and current mirrors."
   },
   {
-    "title": "Data Visualization Dashboard",
+    "title": "EEG Cross-Subject Recognition Framework",
     "year": 2024,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Interactive data visualization dashboard for analyzing healthcare metrics. Built with D3.js and React to provide real-time insights into patient data and treatment outcomes."
+    "description": "Machine learning framework for cross-subject EEG signal classification. Implements domain adaptation techniques and attention mechanisms to improve generalization across different subjects for brain-computer interface applications."
+  },
+  {
+    "title": "Rehabilitation Robotics Control System",
+    "year": 2024,
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "Real-time control system for upper limb rehabilitation robotics. Integrates biosignal processing, motion estimation, and adaptive control algorithms to provide personalized assistance during rehabilitation exercises."
+  },
+  {
+    "title": "Smart Home Automation Platform",
+    "year": 2022,
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "IoT-based home automation system using Arduino and Raspberry Pi. Features voice control, automated lighting, temperature management, and energy monitoring with cross-platform mobile app for remote control and data visualization."
   },
   {
     "title": "Machine Learning Model Optimizer",
     "year": 2023,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Automated hyperparameter tuning system for deep learning models. Implemented using Bayesian optimization to reduce training time by 40% while improving model accuracy."
+    "description": "Automated hyperparameter tuning framework using Bayesian optimization for deep learning models. Reduces training time by 40% while improving model accuracy through intelligent exploration of the hyperparameter space."
   },
   {
-    "title": "Smart Home IoT System",
-    "year": 2022,
-    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Integrated IoT system for home automation using Arduino and Raspberry Pi. Features include voice control, automated lighting, and energy monitoring with mobile app interface."
-  },
-  {
-    "title": "Natural Language Processing Chatbot",
-    "year": 2024,
-    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "AI-powered customer service chatbot using transformer-based models. Deployed on cloud infrastructure with 95% accuracy in intent classification and multilingual support."
-  },
-  {
-    "title": "Computer Vision Object Detection",
+    "title": "Real-Time Object Detection System",
     "year": 2023,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Real-time object detection system for autonomous vehicles. Implemented using YOLO architecture with custom training on driving scenarios to achieve 30 FPS performance."
+    "description": "Computer vision system for autonomous vehicle perception using YOLO architecture. Achieves 30 FPS real-time performance with custom-trained models on diverse driving scenarios including pedestrian detection and traffic sign recognition."
   },
   {
-    "title": "Blockchain Supply Chain Tracker",
-    "year": 2022,
+    "title": "Data Visualization Dashboard",
+    "year": 2024,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Decentralized supply chain management system using Ethereum smart contracts. Provides transparent tracking of products from manufacture to delivery with immutable records."
+    "description": "Interactive healthcare data visualization platform built with D3.js. Provides real-time analytics and insights for patient monitoring, treatment outcomes, and resource allocation through intuitive charts and graphs."
   }
 ]
-
