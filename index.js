@@ -1,12 +1,13 @@
-import { fetchJSON, renderProjects, fetchGitHubData } from './global.js';
+import { fetchJSON, renderProjects, fetchGitHubData, setupProjectModal } from './global.js';
 
 const projects = await fetchJSON('./lib/projects.json');
 const latestProjects = projects.slice(0, 3);
 
-const projectsContainer = document.querySelector('.projects');
+const projectsContainer = document.querySelector('#latest-projects .projects');
 
 if (projectsContainer) {
-  renderProjects(latestProjects, projectsContainer, 'h2');
+  renderProjects(latestProjects, projectsContainer, true);
+  setupProjectModal();
 }
 
 const githubData = await fetchGitHubData('VivianChencwy');

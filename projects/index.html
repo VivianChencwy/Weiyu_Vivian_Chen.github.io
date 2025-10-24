@@ -28,10 +28,19 @@
     
     <section id="projects">
       <h2>All Projects</h2>
-      <div class="projects">
+      <div class="projects projects-grid">
         <!-- Projects will be dynamically loaded here -->
       </div>
     </section>
+
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <span id="modalClose" class="close">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+        <div id="modalDetails"></div>
+      </div>
+    </div>
   </main>
 
   <script src="../global.js" type="module"></script>

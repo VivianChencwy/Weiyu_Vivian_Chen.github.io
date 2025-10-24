@@ -1,11 +1,11 @@
-import { fetchJSON, renderProjects } from '../global.js';
+import { fetchJSON, renderProjects, setupProjectModal } from '../global.js';
 
 const projects = await fetchJSON('../lib/projects.json');
 
 const projectsContainer = document.querySelector('.projects');
 
 if (projectsContainer) {
-  renderProjects(projects, projectsContainer, 'h3');
+  renderProjects(projects, projectsContainer, true);
   
   const projectCount = projects.length;
   console.log(`Total projects: ${projectCount}`);
@@ -14,5 +14,7 @@ if (projectsContainer) {
   countElement.className = 'project-count';
   countElement.textContent = `Showing ${projectCount} projects`;
   projectsContainer.parentElement.insertBefore(countElement, projectsContainer);
+  
+  setupProjectModal();
 }
 

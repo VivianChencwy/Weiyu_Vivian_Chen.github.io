@@ -1,74 +1,113 @@
 [
   {
+    "id": "sta-tcn",
     "title": "STA-TCN: Neural Decoder for Upper Limb Rehabilitation",
     "year": 2024,
     "image": "figures/STA-TCN Neural Decoder for Upper Limb Rehabilitation.png",
-    "description": "Deep learning architecture for continuous motion prediction using surface electromyography (sEMG) signals. Implements Spatio-Temporal Attention and lightweight Temporal Convolutional Network for subject-independent, real-time estimation of elbow joint angles in cable-driven exoskeletons."
+    "summary": "Continuous motion prediction using sEMG for cable-driven exoskeletons.",
+    "description": "This project focuses on continuous motion prediction for upper-limb rehabilitation robotics using surface electromyography (sEMG) signals. A Spatio-Temporal Attention and lightweight Temporal Convolutional Network (STA-TCN) architecture was proposed to enable subject-independent, real-time estimation of elbow joint angles.",
+    "details": "**Objectives**\n\n• Develop a robust, real-time neural decoding model to estimate elbow joint angles from sEMG signals.\n• Eliminate the need for subject-specific calibration by enhancing cross-subject generalization.\n• Validate the model's feasibility in controlling a cable-driven upper-limb rehabilitation exoskeleton.\n\n**Role & Duration**\n\nSep 2024 – Apr 2025 — Project leader & first author: led model design, conducted experiments and data analysis, and coordinated the resulting paper submission."
   },
   {
+    "id": "catheter",
     "title": "Robotic Catheter System for Cardiac Ablation",
     "year": 2024,
     "image": "figures/Robotic Catheter System for Cardiac Ablation.png",
-    "description": "Advanced robot-assisted catheter ablation system for cardiac procedures. Features IMU-based dynamic pose tracking for real-time C-arm movement monitoring and motor-based haptic force feedback system for enhanced precision and safety in atrial fibrillation treatments."
+    "summary": "Robot-assisted catheter ablation system improving precision, safety and feedback.",
+    "description": "Development of a robot ablation catheter system for cardiac ablation therapy, aimed at improving the precision, safety and usability of catheter-based treatments for atrial fibrillation. The system integrates advanced sensing, actuation and control components to enhance surgeon-robot interaction during remote procedures.",
+    "details": "**Objectives**\n\n• Design a robotic system to support remote-controlled catheter ablation with enhanced precision and feedback.\n• Develop two core subsystems: (1) an IMU-based dynamic pose tracker for real-time monitoring of C-arm movement and (2) a motor-based haptic force feedback system simulating tactile resistance.\n\n**Role & Duration**\n\nJul 2024 – Aug 2024 — Core developer for sensing and feedback systems: designed and implemented the IMU pose-tracking module and built a motor-based haptic feedback system."
   },
   {
+    "id": "rrt-motion",
     "title": "RRT Motion Planner",
     "year": 2023,
     "image": "figures/RRT Motion Planner.png",
-    "description": "Rapidly-Exploring Random Tree (RRT) algorithm implementation for robotic manipulator path planning. Capable of exploring high-dimensional configuration spaces and generating collision-free trajectories for 6-DOF robotic arms in complex environments."
+    "summary": "Rapidly-exploring random tree motion planner for a manipulator.",
+    "description": "Course project implementing a rapidly-exploring random tree (RRT) algorithm to plan collision-free paths for a robotic arm. Built a motion planner capable of exploring high-dimensional configuration spaces and generating feasible trajectories for a 6-DOF manipulator.",
+    "details": "**Highlights**\n\nBuilt a motion planner capable of exploring high-dimensional configuration spaces and generating feasible trajectories for a 6-DOF manipulator.",
+    "github": "https://github.com/VivianChencwy/RRT_arm_Planner"
   },
   {
-    "title": "Micro Vibration Robot",
+    "id": "vision-robot",
+    "title": "Vision-Controlled Vibrating Robot",
     "year": 2022,
     "image": "figures/Vision-Controlled Vibrating Robot.png",
-    "description": "Vision-controlled vibrating robot platform using computer vision feedback for precise control. Implements real-time visual marker tracking and adaptive vibration pattern adjustment for remote exploration and manipulation tasks in constrained spaces."
+    "summary": "Vibrating robot controlled via computer vision.",
+    "description": "Created a robot that uses computer-vision feedback to control a vibrating platform for remote exploration and manipulation tasks. Developed algorithms to track visual markers and adjust vibration patterns in real time, enabling closed-loop control.",
+    "details": "**Project Goals**\n\nDeveloped algorithms to track visual markers and adjust vibration patterns in real time, enabling closed-loop control.",
+    "github": "https://github.com/VivianChencwy/Micro_Vibration_Robot"
   },
   {
+    "id": "fynthesizer",
     "title": "Fynthesizer",
     "year": 2023,
     "image": "figures/Fynthesizer.jpg",
-    "description": "Modular audio synthesizer with integrated oscillators, filters and envelope generators. Features microcontroller-based sequencing and parameter control for versatile sound generation and real-time signal processing capabilities."
+    "summary": "Modular audio synthesizer.",
+    "description": "Designed and built a small audio synthesizer as a course project, focusing on modular sound generation and signal processing. Implemented oscillators, filters and envelope generators; integrated a microcontroller to sequence and control parameters.",
+    "details": "**Features**\n\nImplemented oscillators, filters and envelope generators; integrated a microcontroller to sequence and control parameters.",
+    "github": "https://github.com/VivianChencwy/Fynthesizer"
   },
   {
+    "id": "analog-ic",
     "title": "Automated Analog IC Layout System",
     "year": 2023,
     "image": "figures/Automated Analog IC Layout System(1).png",
-    "description": "Automated layout generation tool for matched analog components in integrated circuits. Produces symmetrical placements and routings for resistors and capacitors to minimize device mismatch in precision analog modules like differential amplifiers and current mirrors."
+    "summary": "Automated layout generation for matched resistors and capacitors.",
+    "description": "This project tackles the problem of device mismatch in analog integrated circuits by developing an automated layout generation system for matched resistors and capacitors. Process variation can severely degrade circuit performance in precision modules such as differential amplifiers, current mirrors and filters.",
+    "details": "**Overview**\n\nThe automated layout tool produces symmetrical placements and routings for matched components, helping analog designers mitigate mismatch without manual intervention."
   },
   {
+    "id": "eeg-recognition",
     "title": "EEG Cross-Subject Recognition Framework",
     "year": 2024,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Machine learning framework for cross-subject EEG signal classification. Implements domain adaptation techniques and attention mechanisms to improve generalization across different subjects for brain-computer interface applications."
+    "summary": "Machine learning framework for cross-subject EEG signal classification.",
+    "description": "Machine learning framework for cross-subject EEG signal classification. Implements domain adaptation techniques and attention mechanisms to improve generalization across different subjects for brain-computer interface applications.",
+    "details": "**Key Features**\n\n• Domain adaptation for cross-subject transfer learning\n• Attention-based neural network architecture\n• Real-time signal processing pipeline"
   },
   {
+    "id": "rehab-robotics",
     "title": "Rehabilitation Robotics Control System",
     "year": 2024,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Real-time control system for upper limb rehabilitation robotics. Integrates biosignal processing, motion estimation, and adaptive control algorithms to provide personalized assistance during rehabilitation exercises."
+    "summary": "Real-time control system for upper limb rehabilitation robotics.",
+    "description": "Real-time control system for upper limb rehabilitation robotics. Integrates biosignal processing, motion estimation, and adaptive control algorithms to provide personalized assistance during rehabilitation exercises.",
+    "details": "**Technical Components**\n\n• Biosignal acquisition and processing\n• Motion estimation algorithms\n• Adaptive control strategies"
   },
   {
+    "id": "smart-home",
     "title": "Smart Home Automation Platform",
     "year": 2022,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "IoT-based home automation system using Arduino and Raspberry Pi. Features voice control, automated lighting, temperature management, and energy monitoring with cross-platform mobile app for remote control and data visualization."
+    "summary": "IoT-based home automation system using Arduino and Raspberry Pi.",
+    "description": "IoT-based home automation system using Arduino and Raspberry Pi. Features voice control, automated lighting, temperature management, and energy monitoring with cross-platform mobile app for remote control and data visualization.",
+    "details": "**Features**\n\n• Voice control integration\n• Automated lighting and climate control\n• Energy monitoring dashboard\n• Mobile app for iOS and Android"
   },
   {
+    "id": "ml-optimizer",
     "title": "Machine Learning Model Optimizer",
     "year": 2023,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Automated hyperparameter tuning framework using Bayesian optimization for deep learning models. Reduces training time by 40% while improving model accuracy through intelligent exploration of the hyperparameter space."
+    "summary": "Automated hyperparameter tuning framework using Bayesian optimization.",
+    "description": "Automated hyperparameter tuning framework using Bayesian optimization for deep learning models. Reduces training time by 40% while improving model accuracy through intelligent exploration of the hyperparameter space.",
+    "details": "**Performance**\n\n• 40% reduction in training time\n• Improved model accuracy\n• Supports multiple ML frameworks"
   },
   {
+    "id": "object-detection",
     "title": "Real-Time Object Detection System",
     "year": 2023,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Computer vision system for autonomous vehicle perception using YOLO architecture. Achieves 30 FPS real-time performance with custom-trained models on diverse driving scenarios including pedestrian detection and traffic sign recognition."
+    "summary": "Computer vision system for autonomous vehicle perception using YOLO architecture.",
+    "description": "Computer vision system for autonomous vehicle perception using YOLO architecture. Achieves 30 FPS real-time performance with custom-trained models on diverse driving scenarios including pedestrian detection and traffic sign recognition.",
+    "details": "**Performance Metrics**\n\n• 30 FPS real-time processing\n• Custom training on driving scenarios\n• Pedestrian and traffic sign detection"
   },
   {
+    "id": "data-viz",
     "title": "Data Visualization Dashboard",
     "year": 2024,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
-    "description": "Interactive healthcare data visualization platform built with D3.js. Provides real-time analytics and insights for patient monitoring, treatment outcomes, and resource allocation through intuitive charts and graphs."
+    "summary": "Interactive healthcare data visualization platform built with D3.js.",
+    "description": "Interactive healthcare data visualization platform built with D3.js. Provides real-time analytics and insights for patient monitoring, treatment outcomes, and resource allocation through intuitive charts and graphs.",
+    "details": "**Visualizations**\n\n• Patient monitoring dashboards\n• Treatment outcome analytics\n• Resource allocation charts\n• Real-time data updates"
   }
 ]

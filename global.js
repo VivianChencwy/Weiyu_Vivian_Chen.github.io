@@ -19,7 +19,7 @@ export async function fetchJSON(url) {
   }
 }
 
-export function renderProjects(projects, container, headingLevel = 'h2') {
+export function renderProjects(projects, container, useCards = true) {
   container.innerHTML = '';
   
   const isInSubfolder = location.pathname.includes('/projects/') || 
@@ -27,20 +27,128 @@ export function renderProjects(projects, container, headingLevel = 'h2') {
                         location.pathname.includes('/contact/');
   
   projects.forEach(project => {
-    const article = document.createElement('article');
-    
+    if (useCards) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.id = project.id;
+      
+      let imageSrc = project.image;
+      if (imageSrc && !imageSrc.startsWith('http')) {
+        imageSrc = isInSubfolder ? `../${imageSrc}` : imageSrc;
+      }
+      
+      let cardHTML = '';
+      if (imageSrc) {
+        cardHTML += `<div class="card-image"><img src="${imageSrc}" alt="${project.title}" /></div>`;
+      }
+      
+      cardHTML += `
+        <div class="card-content">
+          <div class="card-title">${project.title}</div>
+          <div class="card-summary">${project.summary || project.description}</div>
+      `;
+      
+      if (project.github) {
+        cardHTML += `<div class="card-github"><a href="${project.github}" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> View on GitHub</a></div>`;
+      }
+      
+      cardHTML += `</div>`;
+      card.innerHTML = cardHTML;
+      
+      card.addEventListener('click', () => openProjectModal(project, isInSubfolder));
+      container.appendChild(card);
+    } else {
+      const article = document.createElement('article');
+      
+      let imageSrc = project.image;
+      if (imageSrc && !imageSrc.startsWith('http')) {
+        imageSrc = isInSubfolder ? `../${imageSrc}` : imageSrc;
+      }
+      
+      article.innerHTML = `
+        <h2>${project.title}</h2>
+        ${imageSrc ? `<img src="${imageSrc}" alt="${project.title}" />` : ''}
+        <p>${project.description}</p>
+      `;
+      
+      container.appendChild(article);
+    }
+  });
+}
+
+export function openProjectModal(project, isInSubfolder = false) {
+  const modal = document.getElementById('modal');
+  if (!modal) return;
+  
+  document.getElementById('modalTitle').textContent = project.title;
+  
+  const modalContent = document.querySelector('.modal-content');
+  let existingImage = modalContent.querySelector('.modal-image');
+  if (existingImage) {
+    existingImage.remove();
+  }
+  
+  if (project.image) {
     let imageSrc = project.image;
     if (imageSrc && !imageSrc.startsWith('http')) {
       imageSrc = isInSubfolder ? `../${imageSrc}` : imageSrc;
     }
+    const modalImage = document.createElement('div');
+    modalImage.className = 'modal-image';
+    modalImage.innerHTML = `<img src="${imageSrc}" alt="${project.title}" />`;
     
-    article.innerHTML = `
-      <${headingLevel}>${project.title}</${headingLevel}>
-      ${imageSrc ? `<img src="${imageSrc}" alt="${project.title}" />` : ''}
-      <p>${project.description}</p>
-    `;
-    
-    container.appendChild(article);
+    const modalTitle = document.getElementById('modalTitle');
+    modalTitle.parentNode.insertBefore(modalImage, modalTitle.nextSibling);
+  }
+  
+  document.getElementById('modalDescription').textContent = project.description;
+  const detailsContainer = document.getElementById('modalDetails');
+  detailsContainer.innerHTML = '';
+  
+  if (project.github) {
+    const githubLink = document.createElement('div');
+    githubLink.className = 'modal-github';
+    githubLink.innerHTML = `<a href="${project.github}" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`;
+    detailsContainer.appendChild(githubLink);
+  }
+  
+  if (project.details) {
+    project.details.split(/\n\n/).forEach(section => {
+      const p = document.createElement('p');
+      if (section.trim().startsWith('•')) {
+        const ul = document.createElement('ul');
+        section.split(/\n/).forEach(line => {
+          const li = document.createElement('li');
+          li.textContent = line.replace(/^•\s*/, '').trim();
+          ul.appendChild(li);
+        });
+        detailsContainer.appendChild(ul);
+      } else {
+        const html = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        p.innerHTML = html;
+        detailsContainer.appendChild(p);
+      }
+    });
+  }
+  
+  modal.classList.remove('hidden');
+}
+
+export function closeProjectModal() {
+  const modal = document.getElementById('modal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+export function setupProjectModal() {
+  const modal = document.getElementById('modal');
+  const closeBtn = document.getElementById('modalClose');
+  if (!modal || !closeBtn) return;
+  
+  closeBtn.addEventListener('click', closeProjectModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeProjectModal();
   });
 }
 
