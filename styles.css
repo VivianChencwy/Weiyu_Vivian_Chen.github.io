@@ -702,6 +702,100 @@ main {
   margin-top: 1em;
 }
 
+/* Project styles */
+.projects article {
+  background-color: #fff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.projects article h2,
+.projects article h3 {
+  margin-top: 0;
+  color: var(--color-accent);
+}
+
+.projects article img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.projects article p {
+  color: #555;
+  line-height: 1.8;
+}
+
+.project-count {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* GitHub stats styles */
+#github-stats {
+  margin: 2rem 0;
+}
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#profile-stats dt {
+  grid-row: 1;
+  font-weight: bold;
+  color: var(--color-accent);
+  text-align: center;
+}
+
+#profile-stats dd {
+  grid-row: 2;
+  font-size: 1.5em;
+  text-align: center;
+  margin: 0;
+  color: #333;
+}
+
+/* Dark mode for projects and stats */
+html.dark-mode .projects article {
+  background-color: #2d1b69;
+}
+
+html.dark-mode .projects article h2,
+html.dark-mode .projects article h3 {
+  color: #c4b5fd;
+}
+
+html.dark-mode .projects article p {
+  color: #e0e0e0;
+}
+
+html.dark-mode #profile-stats dl {
+  background-color: #2d1b69;
+}
+
+html.dark-mode #profile-stats dt {
+  color: #c4b5fd;
+}
+
+html.dark-mode #profile-stats dd {
+  color: #ffffff;
+}
+
+html.dark-mode .project-count {
+  color: #e0e0e0;
+}
+
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
@@ -719,5 +813,9 @@ main {
   
   .nav-container ul {
     gap: 1rem;
+  }
+  
+  #profile-stats dl {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

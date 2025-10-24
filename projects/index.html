@@ -27,25 +27,14 @@
     <h1>My Projects</h1>
     
     <section id="projects">
-      <h2>Research Projects</h2>
-      <div class="projects-grid" id="researchProjectsGrid">
-      </div>
-      
-      <h2>Course Projects</h2>
-      <div class="projects-grid" id="courseProjectsGrid">
+      <h2>All Projects</h2>
+      <div class="projects">
+        <!-- Projects will be dynamically loaded here -->
       </div>
     </section>
-
-    <div id="modal" class="modal hidden">
-      <div class="modal-content">
-        <span id="modalClose" class="close">&times;</span>
-        <h3 id="modalTitle"></h3>
-        <p id="modalDescription"></p>
-        <div id="modalDetails"></div>
-      </div>
-    </div>
   </main>
 
-  <script src="../script.js"></script>
+  <script src="../global.js" type="module"></script>
+  <script src="projects.js" type="module"></script>
 </body>
 </html>
