@@ -493,6 +493,12 @@ section {
   border-bottom: 2px solid #c4b5fd;
 }
 
+.year-section .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1rem;
+}
+
 .card-github {
   margin-top: auto;
   padding-top: 0.5rem;
