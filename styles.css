@@ -422,12 +422,6 @@ section {
   margin-top: 2rem;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  gap: 1rem;
-}
-
 .card {
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -494,9 +488,9 @@ section {
 }
 
 .year-section .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  gap: 1rem;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)) !important;
+  gap: 1rem !important;
 }
 
 .card-github {
