@@ -85,6 +85,15 @@ html.dark-mode .card-github a:hover {
   color: #ffffff;
 }
 
+html.dark-mode .card-year {
+  color: #c4b5fd;
+}
+
+html.dark-mode .year-section h3 {
+  color: #c4b5fd;
+  border-bottom-color: #8b7ab8;
+}
+
 html.dark-mode .modal {
   background: rgba(0, 0, 0, 0.8);
 }
@@ -458,11 +467,30 @@ section {
   margin-bottom: 0.5rem;
 }
 
+.card-year {
+  font-size: 0.85rem;
+  color: #8b7ab8;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
 .card-summary {
   font-size: 0.9rem;
   color: #555;
   flex: 1;
   margin-bottom: 0.5rem;
+}
+
+.year-section {
+  margin-bottom: 3rem;
+}
+
+.year-section h3 {
+  font-size: 1.8rem;
+  color: #8b7ab8;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #c4b5fd;
 }
 
 .card-github {

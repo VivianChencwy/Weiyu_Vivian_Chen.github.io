@@ -19,6 +19,72 @@ export async function fetchJSON(url) {
   }
 }
 
+export function renderProjectsByYear(projects, container) {
+  container.innerHTML = '';
+  
+  const isInSubfolder = location.pathname.includes('/projects/') || 
+                        location.pathname.includes('/resume/') || 
+                        location.pathname.includes('/contact/');
+  
+  const projectsByYear = {};
+  projects.forEach(project => {
+    const year = project.year || 'Unknown';
+    if (!projectsByYear[year]) {
+      projectsByYear[year] = [];
+    }
+    projectsByYear[year].push(project);
+  });
+  
+  const years = Object.keys(projectsByYear).sort((a, b) => b - a);
+  
+  years.forEach(year => {
+    const yearSection = document.createElement('section');
+    yearSection.className = 'year-section';
+    
+    const yearTitle = document.createElement('h3');
+    yearTitle.textContent = year;
+    yearSection.appendChild(yearTitle);
+    
+    const yearGrid = document.createElement('div');
+    yearGrid.className = 'projects-grid';
+    
+    projectsByYear[year].forEach(project => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.id = project.id;
+      
+      let imageSrc = project.image;
+      if (imageSrc && !imageSrc.startsWith('http')) {
+        imageSrc = isInSubfolder ? `../${imageSrc}` : imageSrc;
+      }
+      
+      let cardHTML = '';
+      if (imageSrc) {
+        cardHTML += `<div class="card-image"><img src="${imageSrc}" alt="${project.title}" /></div>`;
+      }
+      
+      cardHTML += `
+        <div class="card-content">
+          <div class="card-title">${project.title}</div>
+          <div class="card-summary">${project.summary || project.description}</div>
+      `;
+      
+      if (project.github) {
+        cardHTML += `<div class="card-github"><a href="${project.github}" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-github"></i> View on GitHub</a></div>`;
+      }
+      
+      cardHTML += `</div>`;
+      card.innerHTML = cardHTML;
+      
+      card.addEventListener('click', () => openProjectModal(project, isInSubfolder));
+      yearGrid.appendChild(card);
+    });
+    
+    yearSection.appendChild(yearGrid);
+    container.appendChild(yearSection);
+  });
+}
+
 export function renderProjects(projects, container, useCards = true) {
   container.innerHTML = '';
   
@@ -45,6 +111,7 @@ export function renderProjects(projects, container, useCards = true) {
       cardHTML += `
         <div class="card-content">
           <div class="card-title">${project.title}</div>
+          <div class="card-year">${project.year}</div>
           <div class="card-summary">${project.summary || project.description}</div>
       `;
       

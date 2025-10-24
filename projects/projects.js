@@ -1,11 +1,11 @@
-import { fetchJSON, renderProjects, setupProjectModal } from '../global.js';
+import { fetchJSON, renderProjectsByYear, setupProjectModal } from '../global.js';
 
 const projects = await fetchJSON('../lib/projects.json');
 
 const projectsContainer = document.querySelector('.projects');
 
 if (projectsContainer) {
-  renderProjects(projects, projectsContainer, true);
+  renderProjectsByYear(projects, projectsContainer);
   
   const projectCount = projects.length;
   console.log(`Total projects: ${projectCount}`);
