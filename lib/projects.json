@@ -59,7 +59,7 @@
   {
     "id": "eeg-recognition",
     "title": "EEG Cross-Subject Recognition Framework",
-    "year": 2024,
+    "year": 2023,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
     "summary": "Machine learning framework for cross-subject EEG signal classification.",
     "description": "Machine learning framework for cross-subject EEG signal classification. Implements domain adaptation techniques and attention mechanisms to improve generalization across different subjects for brain-computer interface applications.",
@@ -68,7 +68,7 @@
   {
     "id": "rehab-robotics",
     "title": "Rehabilitation Robotics Control System",
-    "year": 2024,
+    "year": 2022,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
     "summary": "Real-time control system for upper limb rehabilitation robotics.",
     "description": "Real-time control system for upper limb rehabilitation robotics. Integrates biosignal processing, motion estimation, and adaptive control algorithms to provide personalized assistance during rehabilitation exercises.",
@@ -77,7 +77,7 @@
   {
     "id": "smart-home",
     "title": "Smart Home Automation Platform",
-    "year": 2022,
+    "year": 2021,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
     "summary": "IoT-based home automation system using Arduino and Raspberry Pi.",
     "description": "IoT-based home automation system using Arduino and Raspberry Pi. Features voice control, automated lighting, temperature management, and energy monitoring with cross-platform mobile app for remote control and data visualization.",
@@ -86,7 +86,7 @@
   {
     "id": "ml-optimizer",
     "title": "Machine Learning Model Optimizer",
-    "year": 2023,
+    "year": 2022,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
     "summary": "Automated hyperparameter tuning framework using Bayesian optimization.",
     "description": "Automated hyperparameter tuning framework using Bayesian optimization for deep learning models. Reduces training time by 40% while improving model accuracy through intelligent exploration of the hyperparameter space.",
@@ -95,7 +95,7 @@
   {
     "id": "object-detection",
     "title": "Real-Time Object Detection System",
-    "year": 2023,
+    "year": 2021,
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
     "summary": "Computer vision system for autonomous vehicle perception using YOLO architecture.",
     "description": "Computer vision system for autonomous vehicle perception using YOLO architecture. Achieves 30 FPS real-time performance with custom-trained models on diverse driving scenarios including pedestrian detection and traffic sign recognition.",
