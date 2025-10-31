@@ -2,7 +2,7 @@ import { fetchJSON, renderProjects, setupProjectModal } from '../global.js';
 
 const projects = await fetchJSON('../lib/projects.json');
 
-const projectsContainer = document.querySelector('.projects');
+const projectsContainer = document.querySelector('#projects-list') || document.querySelector('.projects');
 const searchInput = document.getElementById('project-search');
 
 let selectedIndex = -1;
