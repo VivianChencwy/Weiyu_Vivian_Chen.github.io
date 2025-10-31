@@ -439,7 +439,7 @@ section {
 
 .card-image {
   width: 100%;
-  height: 150px;
+  height: 260px;
   overflow: hidden;
 }
 
@@ -964,4 +964,13 @@ html.dark-mode #project-search:focus {
   #profile-stats dl {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Responsive card image heights */
+@media (max-width: 900px) {
+  .card-image { height: 200px; }
+}
+
+@media (max-width: 600px) {
+  .card-image { height: 150px; }
 }
