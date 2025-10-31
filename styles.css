@@ -832,7 +832,10 @@ html.dark-mode .project-count {
 
 /* Pie chart styles */
 #projects-pie-plot {
-  max-width: 20em;
+  width: 20em; /* reserve explicit space so it doesn't overlap content below */
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
   margin-block: 2em;
   overflow: visible;
 }
@@ -856,7 +859,7 @@ html.dark-mode .project-count {
   display: flex;
   gap: 2em;
   align-items: flex-start;
-  margin: 2em 0;
+  margin: 2.5em 0 3.5em; /* add extra bottom space before the first project */
   flex-wrap: wrap;
 }
 
