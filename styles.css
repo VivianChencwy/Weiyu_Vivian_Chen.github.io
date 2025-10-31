@@ -204,7 +204,6 @@ html.dark-mode h6 {
   color: #ffffff;
 }
 
-/* Color scheme switcher styles */
 .color-scheme {
   position: absolute;
   top: 1rem;
@@ -227,7 +226,6 @@ html.dark-mode h6 {
   cursor: pointer;
 }
 
-/* Dark mode adjustments for switcher */
 html.dark-mode .color-scheme {
   color: #ffffff;
 }
@@ -673,7 +671,7 @@ section {
 }
 
 .contact-link:hover {
-  background-color: #5c27f9; /* darker violet */
+  background-color: #5c27f9;
 }
 
 .contact-link i {
@@ -736,7 +734,6 @@ main {
   margin-top: 1em;
 }
 
-/* Project styles */
 .projects article {
   background-color: #fff;
   padding: 1.5rem;
@@ -770,7 +767,6 @@ main {
   margin-bottom: 1rem;
 }
 
-/* GitHub stats styles */
 #github-stats {
   margin: 2rem 0;
 }
@@ -800,7 +796,6 @@ main {
   color: #333;
 }
 
-/* Dark mode for projects and stats */
 html.dark-mode .projects article {
   background-color: #2d1b69;
 }
@@ -830,9 +825,8 @@ html.dark-mode .project-count {
   color: #e0e0e0;
 }
 
-/* Pie chart styles */
 #projects-pie-plot {
-  width: 20em; /* reserve explicit space so it doesn't overlap content below */
+  width: 20em;
   max-width: 100%;
   aspect-ratio: 1 / 1;
   display: block;
@@ -854,16 +848,14 @@ html.dark-mode .project-count {
   fill: var(--color);
 }
 
-/* Pie chart container */
 .pie-chart-container {
   display: flex;
   gap: 2em;
   align-items: flex-start;
-  margin: 2.5em 0 3.5em; /* add extra bottom space before the first project */
+  margin: 2.5em 0 3.5em;
   flex-wrap: wrap;
 }
 
-/* Legend styles */
 #projects-legend {
   list-style: none;
   padding: 0;
@@ -901,7 +893,6 @@ html.dark-mode .project-count {
   background-color: var(--color);
 }
 
-/* Search container */
 .search-container {
   margin: 1.5em 0;
 }
@@ -927,7 +918,6 @@ html.dark-mode .project-count {
   outline-offset: 2px;
 }
 
-/* Dark mode for pie chart */
 html.dark-mode #projects-pie-plot path {
   stroke: #1a0d2e;
 }
@@ -966,7 +956,6 @@ html.dark-mode #project-search:focus {
   }
 }
 
-/* Responsive card image heights */
 @media (max-width: 900px) {
   .card-image { height: 200px; }
 }
