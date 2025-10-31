@@ -119,15 +119,13 @@ function updateSelection() {
 function filterByYear() {
   const svg = d3.select('#projects-pie-plot');
   const arcData = svg.datum();
-  
-  if (selectedYear == null) {
-    currentProjects = setQuery(searchInput.value);
-    renderProjects(currentProjects, projectsContainer, true);
-  } else {
-    const searchFiltered = setQuery(searchInput.value);
-    currentProjects = searchFiltered.filter(p => p.year === selectedYear);
-    renderProjects(currentProjects, projectsContainer, true);
-  }
+
+  const baseProjects = setQuery(searchInput.value);
+  currentProjects = selectedYear == null
+    ? baseProjects
+    : baseProjects.filter(p => p.year === selectedYear);
+
+  renderProjects(currentProjects, projectsContainer, true);
 }
 
 renderProjects(projects, projectsContainer, true);
