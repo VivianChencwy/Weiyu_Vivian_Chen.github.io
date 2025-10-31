@@ -28,6 +28,17 @@
     
     <section id="projects">
       <h2>All Projects</h2>
+      
+      <div class="search-container">
+        <label for="project-search">Search Projects:</label>
+        <input type="text" id="project-search" placeholder="Search by title, description, or keywords...">
+      </div>
+      
+      <div class="pie-chart-container">
+        <svg id="projects-pie-plot" viewBox="-50 -50 100 100"></svg>
+        <ul id="projects-legend"></ul>
+      </div>
+      
       <div class="projects">
         <!-- Projects will be dynamically loaded here -->
       </div>
@@ -43,6 +54,7 @@
     </div>
   </main>
 
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="../global.js" type="module"></script>
   <script src="projects.js" type="module"></script>
 </body>

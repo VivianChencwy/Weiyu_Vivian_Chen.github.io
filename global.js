@@ -111,8 +111,10 @@ export function renderProjects(projects, container, useCards = true) {
       cardHTML += `
         <div class="card-content">
           <div class="card-title">${project.title}</div>
-          <div class="card-year">${project.year}</div>
-          <div class="card-summary">${project.summary || project.description}</div>
+          <div class="card-description-wrapper">
+            <div class="card-summary">${project.summary || project.description}</div>
+            <div class="card-year">${project.year}</div>
+          </div>
       `;
       
       if (project.github) {
