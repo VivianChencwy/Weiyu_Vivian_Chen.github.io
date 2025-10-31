@@ -2,11 +2,10 @@ import { fetchJSON, renderProjects, setupProjectModal } from '../global.js';
 
 const projects = await fetchJSON('../lib/projects.json');
 
-const projectsContainer = document.querySelector('#projects-list') || document.querySelector('.projects');
+const projectsContainer = document.querySelector('.projects');
 const searchInput = document.getElementById('project-search');
 
 let selectedIndex = -1;
-let selectedYear = null;
 let currentProjects = projects;
 
 const colors = d3.scaleOrdinal(d3.schemeCategory10);
@@ -68,9 +67,7 @@ function renderPieChart(filteredProjects) {
       .attr('stroke-width', 1)
       .style('--color', colors(i))
       .on('click', () => {
-        const year = arcDatum.data.year;
-        selectedYear = selectedYear === year ? null : year;
-        selectedIndex = selectedYear == null ? -1 : i;
+        selectedIndex = selectedIndex === i ? -1 : i;
         updateSelection();
         filterByYear();
       });
@@ -90,8 +87,7 @@ function updateLegend(pieData) {
       .append('li')
       .style('--color', colors(i))
       .on('click', () => {
-        selectedYear = selectedYear === d.year ? null : d.year;
-        selectedIndex = selectedYear == null ? -1 : i;
+        selectedIndex = selectedIndex === i ? -1 : i;
         updateSelection();
         filterByYear();
       });
@@ -110,22 +106,25 @@ function updateSelection() {
   const legend = d3.select('#projects-legend');
   
   svg.selectAll('path')
-    .attr('class', (d) => (selectedYear != null && d.data.year === selectedYear ? 'selected' : ''));
+    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
   
   legend.selectAll('li')
-    .attr('class', (_, idx) => (selectedYear != null && idx === selectedIndex ? 'selected' : ''));
+    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
 }
 
 function filterByYear() {
   const svg = d3.select('#projects-pie-plot');
   const arcData = svg.datum();
-
-  const baseProjects = setQuery(searchInput.value);
-  currentProjects = selectedYear == null
-    ? baseProjects
-    : baseProjects.filter(p => p.year === selectedYear);
-
-  renderProjects(currentProjects, projectsContainer, true);
+  
+  if (selectedIndex === -1) {
+    currentProjects = setQuery(searchInput.value);
+    renderProjects(currentProjects, projectsContainer, true);
+  } else {
+    const selectedYear = arcData[selectedIndex].data.year;
+    const searchFiltered = setQuery(searchInput.value);
+    currentProjects = searchFiltered.filter(p => p.year === selectedYear);
+    renderProjects(currentProjects, projectsContainer, true);
+  }
 }
 
 renderProjects(projects, projectsContainer, true);
@@ -135,24 +134,10 @@ setupProjectModal();
 searchInput.addEventListener('input', (event) => {
   const filteredProjects = setQuery(event.target.value);
   currentProjects = filteredProjects;
-
-  // Preserve selectedYear; recompute selectedIndex against new pie data
-  renderProjects(
-    selectedYear == null ? filteredProjects : filteredProjects.filter(p => p.year === selectedYear),
-    projectsContainer,
-    true
-  );
+  
+  selectedIndex = -1;
+  updateSelection();
+  
+  renderProjects(filteredProjects, projectsContainer, true);
   renderPieChart(filteredProjects);
-
-  // After re-render, attempt to restore selection class based on selectedYear
-  if (selectedYear != null) {
-    const svg = d3.select('#projects-pie-plot');
-    const arcData = svg.datum() || [];
-    const i = Array.isArray(arcData) ? arcData.findIndex(a => a.data.year === selectedYear) : -1;
-    selectedIndex = i;
-    updateSelection();
-  } else {
-    selectedIndex = -1;
-    updateSelection();
-  }
 });
