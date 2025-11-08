@@ -1042,11 +1042,10 @@ html.dark-mode #project-search:focus {
   fill-opacity: 0.75;
   stroke: #ffffff;
   stroke-width: 1.5;
-  transition: transform 0.2s ease, fill 0.2s ease, fill-opacity 0.2s ease;
+  transition: fill 0.2s ease, fill-opacity 0.2s ease, stroke-width 0.2s ease;
 }
 
 .dot.hovered {
-  transform: scale(1.15);
   fill-opacity: 1;
   stroke-width: 2;
 }
