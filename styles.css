@@ -932,6 +932,194 @@ html.dark-mode #project-search:focus {
   outline-color: #c4b5fd;
 }
 
+.meta-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.meta-hero {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2.5rem;
+}
+
+.meta-hero h1 {
+  margin-bottom: 0.75rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.summary-grid article {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.meta-stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+}
+
+.meta-stats dt {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.meta-stats dd {
+  margin: 0;
+}
+
+.stat-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.stat-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #444;
+}
+
+.stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+#commit-scatter {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background-color: rgba(33, 24, 73, 0.95);
+  color: #ffffff;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+}
+
+.tooltip.hidden {
+  display: none;
+}
+
+.dot {
+  fill: var(--color-accent);
+  fill-opacity: 0.75;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  transition: transform 0.2s ease, fill 0.2s ease, fill-opacity 0.2s ease;
+}
+
+.dot.hovered {
+  transform: scale(1.15);
+  fill-opacity: 1;
+  stroke-width: 2;
+}
+
+.dot.selected {
+  fill: #ff6b6b;
+  fill-opacity: 0.9;
+}
+
+.axis-label {
+  font-weight: 600;
+  fill: #444;
+}
+
+.grid-lines line {
+  stroke-dasharray: 4 4;
+}
+
+.brush .selection {
+  fill: var(--color-accent);
+  fill-opacity: 0.2;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+
+#selection-count {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+#language-breakdown {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+}
+
+html.dark-mode .meta-hero {
+  background-color: #2d1b69;
+  box-shadow: none;
+}
+
+html.dark-mode .summary-grid article {
+  background-color: #2d1b69;
+  box-shadow: none;
+}
+
+html.dark-mode .stat-label {
+  color: #e0e0e0;
+}
+
+html.dark-mode .chart-wrapper {
+  background-color: #2d1b69;
+  box-shadow: none;
+}
+
+html.dark-mode .axis-label {
+  fill: #ffffff;
+}
+
+html.dark-mode .grid-lines line {
+  stroke: #4a2b9e;
+}
+
+html.dark-mode .tooltip {
+  background-color: rgba(12, 7, 26, 0.95);
+}
+
+html.dark-mode #language-breakdown dt {
+  color: #c4b5fd;
+}
+
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;

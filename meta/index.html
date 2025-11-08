@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Analysis - Weiyu's Portfolio</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="../">Weiyu Chen</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="../">Home</a></li>
+        <li><a href="../projects/">Projects</a></li>
+        <li><a href="../resume/">Resume</a></li>
+        <li><a href="../contact/">Contact</a></li>
+        <li><a href="./" class="current">Meta</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="meta-main">
+    <header class="meta-hero">
+      <h1>Codebase Meta Analysis</h1>
+      <p>Interactive summaries and visualizations generated for DSC 106 Lab 6.</p>
+    </header>
+    <section id="summary">
+      <h2>Summary Statistics</h2>
+      <div class="summary-grid">
+        <article>
+          <h3>Overview</h3>
+          <dl id="overview-stats" class="meta-stats"></dl>
+        </article>
+        <article>
+          <h3>Distinct Counts</h3>
+          <dl id="distinct-stats" class="meta-stats"></dl>
+        </article>
+        <article>
+          <h3>Language Breakdown</h3>
+          <ul id="language-summary" class="stat-list"></ul>
+        </article>
+        <article>
+          <h3>Extremes</h3>
+          <dl id="extreme-stats" class="meta-stats"></dl>
+        </article>
+      </div>
+    </section>
+    <section id="scatter">
+      <h2>Commit Activity</h2>
+      <p>Explore commit timing, authorship, and impact using brushing and tooltips.</p>
+      <div class="chart-wrapper">
+        <svg id="commit-scatter"></svg>
+      </div>
+      <p id="selection-count">No commits selected</p>
+      <dl id="language-breakdown" class="meta-stats"></dl>
+    </section>
+  </main>
+  <div id="tooltip" class="tooltip hidden"></div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="../global.js" type="module"></script>
+  <script src="meta.js" type="module"></script>
+</body>
+</html>
+
