@@ -227,7 +227,7 @@ function formatHourLabel(hour) {
   return `${base}${suffix}`;
 }
 function formatDateTime(date) {
-  return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  return date.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
 }
 function buildTooltipContent(commit) {
   const date = formatDateTime(commit.datetime);
