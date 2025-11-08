@@ -172,8 +172,7 @@ function renderScatter(commitsData) {
 function onMouseEnter(event, commit) {
   tooltip.classed('hidden', false);
   tooltip.html(buildTooltipContent(commit));
-  this.parentNode.appendChild(this);
-  d3.select(this).classed('hovered', true);
+  d3.select(this).raise().classed('hovered', true);
 }
 function onMouseMove(event) {
   tooltip
