@@ -47,15 +47,17 @@ d3.csv('loc.csv', parseRow).then(rows => {
   }
   onTimeSliderChange();
   
-  // Initialize files slider
+  // Render file unit visualization
+  renderFileUnitViz(rows);
+  
+  // Initialize files slider AFTER rendering files
   const filesSlider = document.getElementById('files-progress');
   if (filesSlider) {
     filesSlider.addEventListener('input', onFilesSliderChange);
+    console.log('Files slider initialized');
   }
+  // Initialize the files display
   onFilesSliderChange();
-  
-  // Render file unit visualization
-  renderFileUnitViz(rows);
   
   // Generate commit narrative text for scrollytelling
   generateCommitNarrative();
@@ -345,17 +347,46 @@ function onTimeSliderChange() {
     timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     
     updateScatterPlot(filteredCommits);
-    
-    // Update file visualization based on filtered commits
-    updateFileVisualization();
+    // Note: We removed updateFileVisualization() here so files slider works independently
   }
 }
 
-function updateFileVisualization() {
-  // Get all lines from filtered commits
-  const filteredLines = filteredCommits.flatMap(commit => commit.lines);
+// This function is no longer used - files are now controlled by their own slider
+
+function onFilesSliderChange() {
+  const slider = document.getElementById('files-progress');
+  const timeDisplay = document.getElementById('files-time');
   
-  // Group and process files based on filtered lines
+  console.log('onFilesSliderChange called', slider, timeDisplay, timeScale);
+  
+  if (!slider || !timeDisplay || !timeScale) {
+    console.warn('Missing elements:', { slider: !!slider, timeDisplay: !!timeDisplay, timeScale: !!timeScale });
+    return;
+  }
+  
+  const rawValue = Number.isNaN(slider.valueAsNumber) ? Number(slider.value) : slider.valueAsNumber;
+  const clampedValue = Math.min(Math.max(rawValue, 0), 100);
+  if (Number(slider.value) !== clampedValue) {
+    slider.value = clampedValue;
+  }
+  const filesProgress = clampedValue;
+  const filesMaxTime = timeScale.invert(filesProgress);
+  let filesFilteredCommits = commits.filter((d) => d.datetime <= filesMaxTime);
+  
+  if (!filesFilteredCommits.length && commits.length) {
+    filesFilteredCommits = [commits[0]];
+  }
+  
+  console.log('Files filtered commits:', filesFilteredCommits.length);
+  
+  timeDisplay.textContent = filesMaxTime.toLocaleString('en', {
+    dateStyle: 'long',
+    timeStyle: 'short'
+  });
+  timeDisplay.setAttribute('datetime', filesMaxTime.toISOString());
+  
+  // Update file visualization based on files slider
+  const filteredLines = filesFilteredCommits.flatMap(commit => commit.lines);
   const filteredFilesData = d3
     .groups(filteredLines, (d) => d.file)
     .map(([name, lines]) => {
@@ -363,8 +394,11 @@ function updateFileVisualization() {
     })
     .sort((a, b) => b.lines.length - a.lines.length);
   
+  console.log('Filtered files data:', filteredFilesData.length);
+  
   const filesContainer = d3.select('#files');
   if (!filesContainer.node()) {
+    console.warn('Files container not found');
     return;
   }
   
@@ -383,62 +417,7 @@ function updateFileVisualization() {
     .join('');
   
   filesContainer.html(markup);
-}
-
-function onFilesSliderChange() {
-  const slider = document.getElementById('files-progress');
-  const timeDisplay = document.getElementById('files-time');
-  
-  if (slider && timeDisplay && timeScale) {
-    const rawValue = Number.isNaN(slider.valueAsNumber) ? Number(slider.value) : slider.valueAsNumber;
-    const clampedValue = Math.min(Math.max(rawValue, 0), 100);
-    if (Number(slider.value) !== clampedValue) {
-      slider.value = clampedValue;
-    }
-    const filesProgress = clampedValue;
-    const filesMaxTime = timeScale.invert(filesProgress);
-    const filesFilteredCommits = commits.filter((d) => d.datetime <= filesMaxTime);
-    
-    if (!filesFilteredCommits.length && commits.length) {
-      filesFilteredCommits.push(commits[0]);
-    }
-    
-    timeDisplay.textContent = filesMaxTime.toLocaleString('en', {
-      dateStyle: 'long',
-      timeStyle: 'short'
-    });
-    timeDisplay.setAttribute('datetime', filesMaxTime.toISOString());
-    
-    // Update file visualization based on files slider
-    const filteredLines = filesFilteredCommits.flatMap(commit => commit.lines);
-    const filteredFilesData = d3
-      .groups(filteredLines, (d) => d.file)
-      .map(([name, lines]) => {
-        return { name, lines };
-      })
-      .sort((a, b) => b.lines.length - a.lines.length);
-    
-    const filesContainer = d3.select('#files');
-    if (!filesContainer.node()) {
-      return;
-    }
-    
-    const markup = filteredFilesData
-      .map(file => {
-        const escapedName = escapeHTML(file.name);
-        const dots = file.lines
-          .map((line, idx) => {
-            const color = colors(line.type);
-            return `<span class="loc" style="--color:${color}" data-line-index="${idx}"></span>`;
-          })
-          .join('');
-        const safeName = escapeHTML(file.name);
-        return `<dt data-file="${escapedName}">${safeName}</dt><dd data-file="${escapedName}">${dots}</dd>`;
-      })
-      .join('');
-    
-    filesContainer.html(markup);
-  }
+  console.log('Files visualization updated');
 }
 
 function renderFileUnitViz(rows) {
