@@ -1084,9 +1084,25 @@ html.dark-mode #project-search:focus {
 }
 
 /* Time slider styles */
+.time-filter {
+  margin: 1rem 0;
+}
+
+.time-filter__label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  font-weight: 600;
+}
+
+.time-filter__label span {
+  white-space: nowrap;
+}
+
 #commit-progress {
   width: 100%;
-  margin: 0.5rem 0;
+  flex: 1;
 }
 
 #commit-time {
@@ -1095,21 +1111,14 @@ html.dark-mode #project-search:focus {
   color: var(--color-accent);
 }
 
-label[for="commit-progress"] {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
 /* Scrollytelling layout */
-#scrolly-1 {
+.scrolly {
   position: relative;
   display: flex;
   gap: 1rem;
 }
 
-#scrolly-1 > * {
+.scrolly > * {
   flex: 1;
 }
 
@@ -1131,11 +1140,12 @@ label[for="commit-progress"] {
 }
 
 .step a {
-  color: var(--color-accent);
+  color: #1d4ed8;
   text-decoration: none;
 }
 
 .step a:hover {
+  color: #1e40af;
   text-decoration: underline;
 }
 
@@ -1146,6 +1156,13 @@ label[for="commit-progress"] {
   aspect-ratio: 1;
   background: var(--color, steelblue);
   border-radius: 50%;
+}
+
+#files {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  margin: 0;
 }
 
 #files dd {
@@ -1172,6 +1189,44 @@ label[for="commit-progress"] {
 /* Entry transitions for dots */
 .dot {
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* File scrollytelling */
+#files-section {
+  margin-top: 3rem;
+}
+
+#scrolly-1,
+#scrolly-2 {
+  margin-top: 1.5rem;
+}
+
+#files-plot {
+  position: sticky;
+  top: 0;
+  height: 60vh;
+  overflow: auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+}
+
+#files-story {
+  position: relative;
+}
+
+.file-step {
+  min-height: 40vh;
+}
+
+#files dt.file-active,
+#files dd.file-active {
+  color: #1d4ed8;
+}
+
+#files dd.file-active .loc {
+  filter: brightness(1.2);
 }
 
 html.dark-mode .meta-hero {

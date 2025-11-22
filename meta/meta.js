@@ -17,6 +17,7 @@ let plot;
 let radiusScale;
 let brushGroup;
 let dotsGroup;
+let filesData = [];
 const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const repoUrl = 'https://github.com/VivianChencwy/Weiyu_Vivian_Chen.github.io';
 d3.csv('loc.csv', parseRow).then(rows => {
@@ -51,6 +52,7 @@ d3.csv('loc.csv', parseRow).then(rows => {
   
   // Generate commit narrative text for scrollytelling
   generateCommitNarrative();
+  generateFileNarrative();
   
   // Set up Scrollama
   setupScrollama();
@@ -310,9 +312,17 @@ function onTimeSliderChange() {
   const timeDisplay = document.getElementById('commit-time');
   
   if (slider && timeDisplay && timeScale) {
-    commitProgress = Number(slider.value);
+    const rawValue = Number.isNaN(slider.valueAsNumber) ? Number(slider.value) : slider.valueAsNumber;
+    const clampedValue = Math.min(Math.max(rawValue, 0), 100);
+    if (Number(slider.value) !== clampedValue) {
+      slider.value = clampedValue;
+    }
+    commitProgress = clampedValue;
     commitMaxTime = timeScale.invert(commitProgress);
     filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
+    if (!filteredCommits.length && commits.length) {
+      filteredCommits = [commits[0]];
+    }
     
     timeDisplay.textContent = commitMaxTime.toLocaleString('en', {
       dateStyle: 'long',
@@ -325,7 +335,7 @@ function onTimeSliderChange() {
 }
 
 function renderFileUnitViz(rows) {
-  const files = d3
+  filesData = d3
     .groups(rows, (d) => d.file)
     .map(([name, lines]) => {
       return { name, lines };
@@ -333,40 +343,25 @@ function renderFileUnitViz(rows) {
     .sort((a, b) => b.lines.length - a.lines.length);
   
   const filesContainer = d3.select('#files');
+  if (!filesContainer.node()) {
+    return;
+  }
   
-  const fileSelection = filesContainer.selectAll('div')
-    .data(files, d => d.name)
-    .join(
-      enter => enter.append('div'),
-      update => update,
-      exit => exit.remove()
-    );
+  const markup = filesData
+    .map(file => {
+      const escapedName = escapeHTML(file.name);
+      const dots = file.lines
+        .map((line, idx) => {
+          const color = colors(line.type);
+          return `<span class="loc" style="--color:${color}" data-line-index="${idx}"></span>`;
+        })
+        .join('');
+      const safeName = escapeHTML(file.name);
+      return `<dt data-file="${escapedName}">${safeName}</dt><dd data-file="${escapedName}">${dots}</dd>`;
+    })
+    .join('');
   
-  fileSelection.each(function(d) {
-    const container = d3.select(this);
-    
-    // Update dt
-    container.selectAll('dt')
-      .data([d.name])
-      .join('dt')
-      .text(d => d);
-    
-    // Update dd with dots
-    const dd = container.selectAll('dd')
-      .data([d.lines])
-      .join('dd');
-    
-    dd.selectAll('span.loc')
-      .data(d => d, (d, i) => `${d.file}-${i}`)
-      .join(
-        enter => enter.append('span')
-          .attr('class', 'loc')
-          .style('--color', d => colors(d.type))
-          .style('background', d => colors(d.type)),
-        update => update,
-        exit => exit.remove()
-      );
-  });
+  filesContainer.html(markup);
 }
 
 const colors = d3.scaleOrdinal(d3.schemeTableau10);
@@ -376,7 +371,7 @@ function generateCommitNarrative() {
     .selectAll('.step')
     .data(commits)
     .join('div')
-    .attr('class', 'step')
+    .attr('class', 'step commit-step')
     .html(
       (d, i) => `
         On ${d.datetime.toLocaleString('en', {
@@ -398,7 +393,30 @@ function generateCommitNarrative() {
     );
 }
 
-function onStepEnter(response) {
+function generateFileNarrative() {
+  const filesStory = d3.select('#files-story');
+  if (!filesStory.node()) {
+    return;
+  }
+
+  const topFiles = filesData.slice(0, 10);
+  filesStory
+    .selectAll('.file-step')
+    .data(topFiles, d => d.name)
+    .join('div')
+    .attr('class', 'step file-step')
+    .html(d => {
+      const lineCount = d.lines.length.toLocaleString();
+      const typeSummary = summarizeFileTechnologies(d.lines);
+      return `
+        <h3>${d.name}</h3>
+        <p>${lineCount} lines of code make this file one of the heaviest hitters in the repo.</p>
+        <p>${typeSummary}</p>
+      `;
+    });
+}
+
+function onCommitStepEnter(response) {
   const commit = response.element.__data__;
   if (commit && commit.datetime) {
     commitMaxTime = commit.datetime;
@@ -409,7 +427,7 @@ function onStepEnter(response) {
     // Update slider and time display
     const slider = document.getElementById('commit-progress');
     const timeDisplay = document.getElementById('commit-time');
-    if (slider) slider.value = commitProgress;
+    if (slider) slider.value = commitProgress.toFixed(1);
     if (timeDisplay) {
       timeDisplay.textContent = commitMaxTime.toLocaleString('en', {
         dateStyle: 'long',
@@ -423,13 +441,86 @@ function onStepEnter(response) {
 function setupScrollama() {
   import('https://cdn.jsdelivr.net/npm/[email protected]/+esm').then(module => {
     const scrollama = module.default;
-    const scroller = scrollama();
-    scroller
+    const commitScroller = scrollama();
+    commitScroller
       .setup({
         container: '#scrolly-1',
-        step: '#scrolly-1 .step',
+        step: '#scrolly-1 .commit-step',
       })
-      .onStepEnter(onStepEnter);
+      .onStepEnter(onCommitStepEnter);
+
+    if (document.querySelector('#scrolly-2 .file-step')) {
+      const fileScroller = scrollama();
+      fileScroller
+        .setup({
+          container: '#scrolly-2',
+          step: '#scrolly-2 .file-step',
+        })
+        .onStepEnter(onFileStepEnter);
+    }
   });
+}
+
+function onFileStepEnter(response) {
+  const file = response.element.__data__;
+  if (!file) {
+    return;
+  }
+  highlightFileEntry(file.name);
+}
+
+function highlightFileEntry(fileName) {
+  if (!fileName) {
+    return;
+  }
+  const filesDl = d3.select('#files');
+  if (!filesDl.node()) {
+    return;
+  }
+  const escaped = escapeForSelector(fileName);
+  d3.selectAll('#files dt, #files dd').classed('file-active', false);
+  d3.selectAll(`#files dt[data-file="${escaped}"], #files dd[data-file="${escaped}"]`).classed('file-active', true);
+  const target = document.querySelector(`#files dt[data-file="${escaped}"]`);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function summarizeFileTechnologies(lines) {
+  if (!lines || !lines.length) {
+    return 'This file mostly contains whitespace tweaks.';
+  }
+  const totals = Array.from(d3.rollups(lines, v => v.length, d => d.type))
+    .sort((a, b) => d3.descending(a[1], b[1]));
+  const totalLines = lines.length;
+  const [primaryType, primaryCount] = totals[0] || ['code', totalLines];
+  const formatPercent = d3.format('.0%');
+  const primaryShare = formatPercent(primaryCount / totalLines);
+  const secondary = totals[1]
+    ? `${totals[1][0]} follows with ${formatPercent(totals[1][1] / totalLines)} of the lines.`
+    : 'Everything else makes up the remaining lines.';
+  return `${primaryType} dominates (${primaryShare}) of the content. ${secondary}`;
+}
+
+function escapeHTML(value) {
+  if (typeof value !== 'string') {
+    return value;
+  }
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeForSelector(value) {
+  if (typeof value !== 'string') {
+    return value;
+  }
+  if (window.CSS && CSS.escape) {
+    return CSS.escape(value);
+  }
+  return value.replace(/([!"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~])/g, '\\$1');
 }
 
