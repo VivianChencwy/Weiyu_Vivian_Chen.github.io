@@ -1128,7 +1128,7 @@ html.dark-mode #project-search:focus {
 
 #scatter-story {
   position: relative;
-  padding-bottom: 50vh;
+  padding-bottom: 80vh;
 }
 
 #scatter-plot {
@@ -1139,9 +1139,14 @@ html.dark-mode #project-search:focus {
 }
 
 .step {
-  padding-bottom: 1rem;
-  min-height: 20vh;
+  padding: 2rem 0;
+  min-height: 40vh;
   line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.step:last-child {
+  margin-bottom: 0;
 }
 
 .step a {
@@ -1226,14 +1231,18 @@ html.dark-mode #project-search:focus {
 
 #files-story {
   position: relative;
-  padding-bottom: 80vh;
-  min-height: 100vh;
+  padding-bottom: 100vh;
 }
 
 .file-step {
-  min-height: 60vh;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+  min-height: 80vh;
+  padding: 2rem 0;
+  margin-bottom: 4rem;
+}
+
+.file-step:last-child {
+  margin-bottom: 0;
+  padding-bottom: 4rem;
 }
 
 #files dt.file-active,

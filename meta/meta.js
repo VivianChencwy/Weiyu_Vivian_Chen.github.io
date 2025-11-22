@@ -591,9 +591,8 @@ function setupScrollama() {
       commitScroller
         .setup({
           step: '#scrolly-1 .commit-step',
-          offset: 0.6,
+          offset: 0.5,
           debug: false,
-          progress: true,
         })
         .onStepEnter(onCommitStepEnter);
       
@@ -606,9 +605,8 @@ function setupScrollama() {
         fileScroller
           .setup({
             step: '#scrolly-2 .file-step',
-            offset: 0.6,
+            offset: 0.33,
             debug: false,
-            progress: true,
           })
           .onStepEnter(onFileStepEnter);
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
