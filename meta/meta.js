@@ -453,60 +453,50 @@ function renderFileUnitViz(rows) {
 const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
 function generateCommitNarrative() {
-  updateCommitNarrative(commits);
+  const scatterStory = d3.select('#scatter-story');
+  
+  // Create all steps at once with proper data binding
+  scatterStory
+    .selectAll('.step')
+    .data(commits, d => d.id)
+    .join('div')
+    .attr('class', 'step commit-step')
+    .each(function(d) {
+      // Store data directly on the element for Scrollama
+      this.__data__ = d;
+    })
+    .html((d, i) => `
+      On ${d.datetime.toLocaleString('en', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+      })},
+      I made <a href="${d.url}" target="_blank">${
+        i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
+      }</a>.
+      I edited ${d.totalLines} lines across ${
+        d3.rollups(
+          d.lines,
+          (D) => D.length,
+          (d) => d.file,
+        ).length
+      } files.
+      Then I looked over all I had made, and I saw that it was very good.
+    `);
+  
+  console.log('Generated', commits.length, 'commit narrative steps');
 }
 
 function updateCommitNarrative(commitsToShow) {
+  // Simply show/hide steps based on what should be visible
   d3.select('#scatter-story')
     .selectAll('.step')
-    .data(commitsToShow, d => d.id)
-    .join(
-      enter => enter.append('div')
-        .attr('class', 'step commit-step')
-        .style('opacity', 0)
-        .html((d, i) => `
-          On ${d.datetime.toLocaleString('en', {
-            dateStyle: 'full',
-            timeStyle: 'short',
-          })},
-          I made <a href="${d.url}" target="_blank">${
-            i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
-          }</a>.
-          I edited ${d.totalLines} lines across ${
-            d3.rollups(
-              d.lines,
-              (D) => D.length,
-              (d) => d.file,
-            ).length
-          } files.
-          Then I looked over all I had made, and I saw that it was very good.
-        `)
-        .transition()
-        .duration(300)
-        .style('opacity', 1),
-      update => update
-        .html((d, i) => `
-          On ${d.datetime.toLocaleString('en', {
-            dateStyle: 'full',
-            timeStyle: 'short',
-          })},
-          I made <a href="${d.url}" target="_blank">${
-            i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
-          }</a>.
-          I edited ${d.totalLines} lines across ${
-            d3.rollups(
-              d.lines,
-              (D) => D.length,
-              (d) => d.file,
-            ).length
-          } files.
-          Then I looked over all I had made, and I saw that it was very good.
-        `),
-      exit => exit.transition()
-        .duration(300)
-        .style('opacity', 0)
-        .remove()
-    );
+    .style('display', function() {
+      const d = this.__data__;
+      if (!d) return 'none';
+      return commitsToShow.some(c => c.id === d.id) ? 'block' : 'none';
+    });
+  
+  console.log('Updated narrative to show', commitsToShow.length, 'commits');
 }
 
 function generateFileNarrative() {
@@ -582,6 +572,11 @@ function setupScrollama() {
         return;
       }
       
+      // Check if first step has data
+      const firstStep = document.querySelector('#scrolly-1 .commit-step');
+      console.log('First step element:', firstStep);
+      console.log('First step __data__:', firstStep ? firstStep.__data__ : 'none');
+      
       // Set up commit scrollytelling
       const commitScroller = window.scrollama();
       commitScroller
@@ -589,7 +584,7 @@ function setupScrollama() {
           container: '#scrolly-1',
           step: '#scrolly-1 .commit-step',
           offset: 0.5,
-          debug: true,  // Enable debug for testing
+          debug: false,  // Disable debug to remove black lines
         })
         .onStepEnter(onCommitStepEnter);
       
@@ -604,7 +599,7 @@ function setupScrollama() {
             container: '#scrolly-2',
             step: '#scrolly-2 .file-step',
             offset: 0.5,
-            debug: true,
+            debug: false,
           })
           .onStepEnter(onFileStepEnter);
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
@@ -614,7 +609,7 @@ function setupScrollama() {
       window.addEventListener('resize', () => {
         commitScroller.resize();
       });
-    }, 100);
+    }, 200);  // Increased delay to ensure data binding
   };
   
   script.onerror = () => {
