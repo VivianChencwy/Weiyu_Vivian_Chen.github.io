@@ -1139,10 +1139,13 @@ html.dark-mode #project-search:focus {
 }
 
 .step {
-  padding: 2rem 0;
-  min-height: 40vh;
+  padding: 3rem 0;
+  min-height: 60vh;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .step:last-child {
@@ -1227,22 +1230,45 @@ html.dark-mode #project-search:focus {
   border-radius: 8px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   align-self: start;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+#files-plot::-webkit-scrollbar {
+  width: 8px;
+}
+
+#files-plot::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+#files-plot::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+#files-plot::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 #files-story {
   position: relative;
   padding-bottom: 100vh;
+  will-change: transform;
 }
 
 .file-step {
-  min-height: 80vh;
-  padding: 2rem 0;
-  margin-bottom: 4rem;
+  min-height: 100vh;
+  padding: 3rem 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .file-step:last-child {
-  margin-bottom: 0;
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
 #files dt.file-active,

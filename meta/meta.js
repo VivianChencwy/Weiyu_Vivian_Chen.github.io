@@ -605,10 +605,14 @@ function setupScrollama() {
         fileScroller
           .setup({
             step: '#scrolly-2 .file-step',
-            offset: 0.33,
+            offset: 0.5,
             debug: false,
+            threshold: 1,
           })
-          .onStepEnter(onFileStepEnter);
+          .onStepEnter(onFileStepEnter)
+          .onStepExit((response) => {
+            console.log('File step exited, index:', response.index, 'direction:', response.direction);
+          });
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
       }
       
@@ -626,14 +630,34 @@ function setupScrollama() {
   document.head.appendChild(script);
 }
 
+let lastFileIndex = -1;
+let fileDebounceTimer = null;
+
 function onFileStepEnter(response) {
   const file = response.element.__data__;
+  const currentIndex = response.index;
+  
+  // Prevent rapid re-triggering of the same step
+  if (currentIndex === lastFileIndex) {
+    return;
+  }
+  
   console.log('File step entered, index:', response.index, 'direction:', response.direction, 'file:', file ? file.name : 'none');
   
   if (!file) {
     return;
   }
-  highlightFileEntry(file.name);
+  
+  // Clear any pending updates
+  if (fileDebounceTimer) {
+    clearTimeout(fileDebounceTimer);
+  }
+  
+  // Debounce the highlighting to prevent rapid updates
+  fileDebounceTimer = setTimeout(() => {
+    lastFileIndex = currentIndex;
+    highlightFileEntry(file.name);
+  }, 50);
 }
 
 function highlightFileEntry(fileName) {
