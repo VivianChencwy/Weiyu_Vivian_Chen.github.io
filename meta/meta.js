@@ -347,7 +347,7 @@ function onTimeSliderChange() {
     timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     
     updateScatterPlot(filteredCommits);
-    // Note: We removed updateFileVisualization() here so files slider works independently
+    updateCommitNarrative(filteredCommits);
   }
 }
 
@@ -453,29 +453,59 @@ function renderFileUnitViz(rows) {
 const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
 function generateCommitNarrative() {
+  updateCommitNarrative(commits);
+}
+
+function updateCommitNarrative(commitsToShow) {
   d3.select('#scatter-story')
     .selectAll('.step')
-    .data(commits)
-    .join('div')
-    .attr('class', 'step commit-step')
-    .html(
-      (d, i) => `
-        On ${d.datetime.toLocaleString('en', {
-          dateStyle: 'full',
-          timeStyle: 'short',
-        })},
-        I made <a href="${d.url}" target="_blank">${
-          i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
-        }</a>.
-        I edited ${d.totalLines} lines across ${
-          d3.rollups(
-            d.lines,
-            (D) => D.length,
-            (d) => d.file,
-          ).length
-        } files.
-        Then I looked over all I had made, and I saw that it was very good.
-      `,
+    .data(commitsToShow, d => d.id)
+    .join(
+      enter => enter.append('div')
+        .attr('class', 'step commit-step')
+        .style('opacity', 0)
+        .html((d, i) => `
+          On ${d.datetime.toLocaleString('en', {
+            dateStyle: 'full',
+            timeStyle: 'short',
+          })},
+          I made <a href="${d.url}" target="_blank">${
+            i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
+          }</a>.
+          I edited ${d.totalLines} lines across ${
+            d3.rollups(
+              d.lines,
+              (D) => D.length,
+              (d) => d.file,
+            ).length
+          } files.
+          Then I looked over all I had made, and I saw that it was very good.
+        `)
+        .transition()
+        .duration(300)
+        .style('opacity', 1),
+      update => update
+        .html((d, i) => `
+          On ${d.datetime.toLocaleString('en', {
+            dateStyle: 'full',
+            timeStyle: 'short',
+          })},
+          I made <a href="${d.url}" target="_blank">${
+            i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
+          }</a>.
+          I edited ${d.totalLines} lines across ${
+            d3.rollups(
+              d.lines,
+              (D) => D.length,
+              (d) => d.file,
+            ).length
+          } files.
+          Then I looked over all I had made, and I saw that it was very good.
+        `),
+      exit => exit.transition()
+        .duration(300)
+        .style('opacity', 0)
+        .remove()
     );
 }
 
@@ -504,16 +534,23 @@ function generateFileNarrative() {
 
 function onCommitStepEnter(response) {
   const commit = response.element.__data__;
+  console.log('Step entered:', commit ? commit.datetime : 'no data');
+  
   if (commit && commit.datetime) {
     commitMaxTime = commit.datetime;
     commitProgress = timeScale(commitMaxTime);
     filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
+    
+    console.log('Updating to show', filteredCommits.length, 'commits');
+    
     updateScatterPlot(filteredCommits);
     
     // Update slider and time display
     const slider = document.getElementById('commit-progress');
     const timeDisplay = document.getElementById('commit-time');
-    if (slider) slider.value = commitProgress.toFixed(1);
+    if (slider) {
+      slider.value = commitProgress.toFixed(1);
+    }
     if (timeDisplay) {
       timeDisplay.textContent = commitMaxTime.toLocaleString('en', {
         dateStyle: 'long',
@@ -527,23 +564,38 @@ function onCommitStepEnter(response) {
 function setupScrollama() {
   import('https://cdn.jsdelivr.net/npm/[email protected]/+esm').then(module => {
     const scrollama = module.default;
+    
+    // Set up commit scrollytelling
     const commitScroller = scrollama();
     commitScroller
       .setup({
         container: '#scrolly-1',
         step: '#scrolly-1 .commit-step',
+        offset: 0.5,
+        debug: false,
       })
       .onStepEnter(onCommitStepEnter);
+    
+    console.log('Scrollama initialized for commits');
 
+    // Set up file scrollytelling if elements exist
     if (document.querySelector('#scrolly-2 .file-step')) {
       const fileScroller = scrollama();
       fileScroller
         .setup({
           container: '#scrolly-2',
           step: '#scrolly-2 .file-step',
+          offset: 0.5,
+          debug: false,
         })
         .onStepEnter(onFileStepEnter);
+      console.log('Scrollama initialized for files');
     }
+    
+    // Resize handler
+    window.addEventListener('resize', () => {
+      commitScroller.resize();
+    });
   });
 }
 
