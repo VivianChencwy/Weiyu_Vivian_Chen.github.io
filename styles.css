@@ -1083,6 +1083,97 @@ html.dark-mode #project-search:focus {
   gap: 0.4rem 1rem;
 }
 
+/* Time slider styles */
+#commit-progress {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+#commit-time {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+label[for="commit-progress"] {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Scrollytelling layout */
+#scrolly-1 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+}
+
+#scrolly-1 > * {
+  flex: 1;
+}
+
+#scatter-story {
+  position: relative;
+}
+
+#scatter-plot {
+  position: sticky;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  height: 50vh;
+}
+
+.step {
+  padding-bottom: 2rem;
+  min-height: 50vh;
+}
+
+.step a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.step a:hover {
+  text-decoration: underline;
+}
+
+/* Unit visualization styles */
+.loc {
+  display: flex;
+  width: 0.5em;
+  aspect-ratio: 1;
+  background: var(--color, steelblue);
+  border-radius: 50%;
+}
+
+#files dd {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  align-content: start;
+  gap: 0.15em;
+  padding-top: 0.6em;
+  margin-left: 0;
+}
+
+#files dt {
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-top: 1rem;
+}
+
+#files dt:first-child {
+  margin-top: 0;
+}
+
+/* Entry transitions for dots */
+.dot {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 html.dark-mode .meta-hero {
   background-color: #2d1b69;
   box-shadow: none;

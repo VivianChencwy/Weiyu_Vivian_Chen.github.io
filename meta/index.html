@@ -52,13 +52,26 @@
     <section id="scatter">
       <h2>Commit Activity</h2>
       <p>Explore commit timing, authorship, and impact using brushing and tooltips.</p>
-      <div class="chart-wrapper">
-        <svg id="commit-scatter"></svg>
+      <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem;">
+        <label for="commit-progress" style="flex: 1; display: flex; align-items: baseline; gap: 1rem;">
+          Show commits until:
+          <input type="range" id="commit-progress" min="0" max="100" value="100" style="flex: 1;">
+          <time id="commit-time"></time>
+        </label>
       </div>
-      <p id="selection-count">No commits selected</p>
-      <dl id="language-breakdown" class="meta-stats"></dl>
+      <div id="scrolly-1">
+        <div id="scatter-story"></div>
+        <div id="scatter-plot">
+          <div class="chart-wrapper">
+            <svg id="commit-scatter"></svg>
+          </div>
+          <p id="selection-count">No commits selected</p>
+          <dl id="language-breakdown" class="meta-stats"></dl>
+        </div>
+      </div>
     </section>
   </main>
+  <dl id="files"></dl>
   <div id="tooltip" class="tooltip hidden"></div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="../global.js" type="module"></script>
