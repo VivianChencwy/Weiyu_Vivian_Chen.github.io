@@ -40,12 +40,19 @@ d3.csv('loc.csv', parseRow).then(rows => {
   renderSummary(rows, commits);
   renderScatter(commits);
   
-  // Initialize slider
+  // Initialize commit slider
   const slider = document.getElementById('commit-progress');
   if (slider) {
     slider.addEventListener('input', onTimeSliderChange);
   }
   onTimeSliderChange();
+  
+  // Initialize files slider
+  const filesSlider = document.getElementById('files-progress');
+  if (filesSlider) {
+    filesSlider.addEventListener('input', onFilesSliderChange);
+  }
+  onFilesSliderChange();
   
   // Render file unit visualization
   renderFileUnitViz(rows);
@@ -338,6 +345,99 @@ function onTimeSliderChange() {
     timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     
     updateScatterPlot(filteredCommits);
+    
+    // Update file visualization based on filtered commits
+    updateFileVisualization();
+  }
+}
+
+function updateFileVisualization() {
+  // Get all lines from filtered commits
+  const filteredLines = filteredCommits.flatMap(commit => commit.lines);
+  
+  // Group and process files based on filtered lines
+  const filteredFilesData = d3
+    .groups(filteredLines, (d) => d.file)
+    .map(([name, lines]) => {
+      return { name, lines };
+    })
+    .sort((a, b) => b.lines.length - a.lines.length);
+  
+  const filesContainer = d3.select('#files');
+  if (!filesContainer.node()) {
+    return;
+  }
+  
+  const markup = filteredFilesData
+    .map(file => {
+      const escapedName = escapeHTML(file.name);
+      const dots = file.lines
+        .map((line, idx) => {
+          const color = colors(line.type);
+          return `<span class="loc" style="--color:${color}" data-line-index="${idx}"></span>`;
+        })
+        .join('');
+      const safeName = escapeHTML(file.name);
+      return `<dt data-file="${escapedName}">${safeName}</dt><dd data-file="${escapedName}">${dots}</dd>`;
+    })
+    .join('');
+  
+  filesContainer.html(markup);
+}
+
+function onFilesSliderChange() {
+  const slider = document.getElementById('files-progress');
+  const timeDisplay = document.getElementById('files-time');
+  
+  if (slider && timeDisplay && timeScale) {
+    const rawValue = Number.isNaN(slider.valueAsNumber) ? Number(slider.value) : slider.valueAsNumber;
+    const clampedValue = Math.min(Math.max(rawValue, 0), 100);
+    if (Number(slider.value) !== clampedValue) {
+      slider.value = clampedValue;
+    }
+    const filesProgress = clampedValue;
+    const filesMaxTime = timeScale.invert(filesProgress);
+    const filesFilteredCommits = commits.filter((d) => d.datetime <= filesMaxTime);
+    
+    if (!filesFilteredCommits.length && commits.length) {
+      filesFilteredCommits.push(commits[0]);
+    }
+    
+    timeDisplay.textContent = filesMaxTime.toLocaleString('en', {
+      dateStyle: 'long',
+      timeStyle: 'short'
+    });
+    timeDisplay.setAttribute('datetime', filesMaxTime.toISOString());
+    
+    // Update file visualization based on files slider
+    const filteredLines = filesFilteredCommits.flatMap(commit => commit.lines);
+    const filteredFilesData = d3
+      .groups(filteredLines, (d) => d.file)
+      .map(([name, lines]) => {
+        return { name, lines };
+      })
+      .sort((a, b) => b.lines.length - a.lines.length);
+    
+    const filesContainer = d3.select('#files');
+    if (!filesContainer.node()) {
+      return;
+    }
+    
+    const markup = filteredFilesData
+      .map(file => {
+        const escapedName = escapeHTML(file.name);
+        const dots = file.lines
+          .map((line, idx) => {
+            const color = colors(line.type);
+            return `<span class="loc" style="--color:${color}" data-line-index="${idx}"></span>`;
+          })
+          .join('');
+        const safeName = escapeHTML(file.name);
+        return `<dt data-file="${escapedName}">${safeName}</dt><dd data-file="${escapedName}">${dots}</dd>`;
+      })
+      .join('');
+    
+    filesContainer.html(markup);
   }
 }
 

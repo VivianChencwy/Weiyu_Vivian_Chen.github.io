@@ -73,6 +73,13 @@
     <section id="files-section">
       <h2>The Race for the Biggest File</h2>
       <p>Scroll to meet the most substantial files in this repo and see how each technology contributes line-by-line.</p>
+      <div class="time-filter">
+        <label class="time-filter__label">
+          <span>Show files until:</span>
+          <input type="range" id="files-progress" min="0" max="100" value="100" step="0.1">
+          <time id="files-time" aria-live="polite"></time>
+        </label>
+      </div>
       <div id="scrolly-2" class="scrolly">
         <div id="files-story"></div>
         <div id="files-plot">
