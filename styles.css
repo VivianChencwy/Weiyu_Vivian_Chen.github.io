@@ -1226,12 +1226,14 @@ html.dark-mode #project-search:focus {
 
 #files-story {
   position: relative;
-  padding-bottom: 50vh;
+  padding-bottom: 80vh;
+  min-height: 100vh;
 }
 
 .file-step {
-  min-height: 30vh;
-  padding-bottom: 1rem;
+  min-height: 60vh;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 #files dt.file-active,

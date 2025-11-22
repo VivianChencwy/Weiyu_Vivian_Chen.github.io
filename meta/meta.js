@@ -508,6 +508,10 @@ function generateFileNarrative() {
     .data(topFiles, d => d.name)
     .join('div')
     .attr('class', 'step file-step')
+    .each(function(d) {
+      // Store data directly on the element for Scrollama
+      this.__data__ = d;
+    })
     .html(d => {
       const lineCount = d.lines.length.toLocaleString();
       const typeSummary = summarizeFileTechnologies(d.lines);
@@ -517,6 +521,8 @@ function generateFileNarrative() {
         <p>${typeSummary}</p>
       `;
     });
+  
+  console.log('Generated', topFiles.length, 'file narrative steps');
 }
 
 let isScrollamaActive = false;
@@ -624,6 +630,8 @@ function setupScrollama() {
 
 function onFileStepEnter(response) {
   const file = response.element.__data__;
+  console.log('File step entered, index:', response.index, 'direction:', response.direction, 'file:', file ? file.name : 'none');
+  
   if (!file) {
     return;
   }
