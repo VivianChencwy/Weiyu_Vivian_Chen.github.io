@@ -26,7 +26,6 @@ d3.csv('loc.csv', parseRow).then(rows => {
   }
   commits = buildCommits(rows);
   
-  // Set up time scale for filtering
   timeScale = d3
     .scaleTime()
     .domain([
@@ -40,30 +39,24 @@ d3.csv('loc.csv', parseRow).then(rows => {
   renderSummary(rows, commits);
   renderScatter(commits);
   
-  // Initialize commit slider
   const slider = document.getElementById('commit-progress');
   if (slider) {
     slider.addEventListener('input', onTimeSliderChange);
   }
   onTimeSliderChange();
   
-  // Render file unit visualization
   renderFileUnitViz(rows);
   
-  // Initialize files slider AFTER rendering files
   const filesSlider = document.getElementById('files-progress');
   if (filesSlider) {
     filesSlider.addEventListener('input', onFilesSliderChange);
     console.log('Files slider initialized');
   }
-  // Initialize the files display
   onFilesSliderChange();
   
-  // Generate commit narrative text for scrollytelling
   generateCommitNarrative();
   generateFileNarrative();
   
-  // Set up Scrollama
   setupScrollama();
 });
 function parseRow(row) {
@@ -219,12 +212,10 @@ function renderScatter(commitsData) {
     .on('start brush end', brushed);
   brushGroup.call(brush);
   
-  // Store brush reference for later
   window.commitBrush = brush;
 }
 
 function updateScatterPlot(commitsData) {
-  // Update the dots with filtered data
   dots = dotsGroup.selectAll('circle')
     .data(commitsData, d => d.id)
     .join(
@@ -327,7 +318,6 @@ function onTimeSliderChange() {
   const slider = document.getElementById('commit-progress');
   const timeDisplay = document.getElementById('commit-time');
   
-  // Don't respond to slider changes if Scrollama just updated it
   if (isScrollamaActive) {
     return;
   }
@@ -354,8 +344,6 @@ function onTimeSliderChange() {
     updateScatterPlot(filteredCommits);
   }
 }
-
-// This function is no longer used - files are now controlled by their own slider
 
 function onFilesSliderChange() {
   const slider = document.getElementById('files-progress');
@@ -389,7 +377,6 @@ function onFilesSliderChange() {
   });
   timeDisplay.setAttribute('datetime', filesMaxTime.toISOString());
   
-  // Update file visualization based on files slider
   const filteredLines = filesFilteredCommits.flatMap(commit => commit.lines);
   const filteredFilesData = d3
     .groups(filteredLines, (d) => d.file)
@@ -459,14 +446,12 @@ const colors = d3.scaleOrdinal(d3.schemeTableau10);
 function generateCommitNarrative() {
   const scatterStory = d3.select('#scatter-story');
   
-  // Create all steps at once with proper data binding
   scatterStory
     .selectAll('.step')
     .data(commits, d => d.id)
     .join('div')
     .attr('class', 'step commit-step')
     .each(function(d) {
-      // Store data directly on the element for Scrollama
       this.__data__ = d;
     })
     .html((d, i) => `
@@ -491,8 +476,6 @@ function generateCommitNarrative() {
 }
 
 function updateCommitNarrative(commitsToShow) {
-  // Don't modify the narrative - let Scrollama handle it naturally
-  // This function is now mostly a no-op
   console.log('Narrative update requested for', commitsToShow.length, 'commits');
 }
 
@@ -509,7 +492,6 @@ function generateFileNarrative() {
     .join('div')
     .attr('class', 'step file-step')
     .each(function(d) {
-      // Store data directly on the element for Scrollama
       this.__data__ = d;
     })
     .html(d => {
@@ -534,10 +516,8 @@ function onCommitStepEnter(response) {
   if (commit && commit.datetime) {
     isScrollamaActive = true;
     
-    // Find the index of this commit in the commits array
     const commitIndex = commits.findIndex(c => c.id === commit.id);
     
-    // Include all commits up to and including this one
     commitMaxTime = commit.datetime;
     commitProgress = timeScale(commitMaxTime);
     filteredCommits = commits.slice(0, commitIndex + 1);
@@ -546,7 +526,6 @@ function onCommitStepEnter(response) {
     
     updateScatterPlot(filteredCommits);
     
-    // Update slider and time display without triggering change event
     const slider = document.getElementById('commit-progress');
     const timeDisplay = document.getElementById('commit-time');
     if (slider) {
@@ -560,7 +539,6 @@ function onCommitStepEnter(response) {
       timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     }
     
-    // Allow slider to work again after a brief delay
     setTimeout(() => {
       isScrollamaActive = false;
     }, 100);
@@ -570,13 +548,11 @@ function onCommitStepEnter(response) {
 function setupScrollama() {
   const scrollamaUrl = 'https://unpkg.com/scrollama@3.2.0/build/scrollama.min.js';
   
-  // Load scrollama from unpkg
   const script = document.createElement('script');
   script.src = scrollamaUrl;
   script.onload = () => {
     console.log('Scrollama loaded successfully');
     
-    // Add a small delay to ensure DOM is fully ready
     setTimeout(() => {
       const stepsCount = document.querySelectorAll('#scrolly-1 .commit-step').length;
       console.log('Found', stepsCount, 'commit steps');
@@ -586,7 +562,6 @@ function setupScrollama() {
         return;
       }
       
-      // Set up commit scrollytelling
       const commitScroller = window.scrollama();
       commitScroller
         .setup({
@@ -598,7 +573,6 @@ function setupScrollama() {
       
       console.log('Scrollama initialized for commits with', stepsCount, 'steps');
 
-      // Set up file scrollytelling if elements exist
       const fileStepsCount = document.querySelectorAll('#scrolly-2 .file-step').length;
       if (fileStepsCount > 0) {
         const fileScroller = window.scrollama();
@@ -612,7 +586,6 @@ function setupScrollama() {
           .onStepEnter(onFileStepEnter);
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
         
-        // Optimize resize handling
         let resizeTimer;
         window.addEventListener('resize', () => {
           clearTimeout(resizeTimer);
@@ -622,7 +595,6 @@ function setupScrollama() {
           }, 150);
         });
       } else {
-        // Only resize commit scroller if no file scroller
         let resizeTimer;
         window.addEventListener('resize', () => {
           clearTimeout(resizeTimer);
@@ -649,7 +621,6 @@ function onFileStepEnter(response) {
   const file = response.element.__data__;
   const currentIndex = response.index;
   
-  // Prevent rapid re-triggering of the same step
   if (currentIndex === lastFileIndex || isFileUpdating) {
     return;
   }
@@ -660,12 +631,10 @@ function onFileStepEnter(response) {
     return;
   }
   
-  // Clear any pending updates
   if (fileDebounceTimer) {
     clearTimeout(fileDebounceTimer);
   }
   
-  // Debounce and use requestAnimationFrame for smooth updates
   fileDebounceTimer = setTimeout(() => {
     isFileUpdating = true;
     requestAnimationFrame(() => {
@@ -687,15 +656,12 @@ function highlightFileEntry(fileName) {
   
   const escaped = escapeForSelector(fileName);
   
-  // Remove all active classes first
   const activeElements = filesContainer.querySelectorAll('.file-active');
   activeElements.forEach(el => el.classList.remove('file-active'));
   
-  // Add active class to the target elements
   const targetElements = filesContainer.querySelectorAll(`[data-file="${escaped}"]`);
   targetElements.forEach(el => el.classList.add('file-active'));
   
-  // Smooth scroll to the target
   const target = filesContainer.querySelector(`dt[data-file="${escaped}"]`);
   if (target) {
     target.scrollIntoView({
