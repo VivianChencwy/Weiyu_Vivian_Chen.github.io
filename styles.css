@@ -1139,13 +1139,15 @@ html.dark-mode #project-search:focus {
 }
 
 .step {
-  padding-bottom: 2rem;
-  min-height: 50vh;
+  padding-bottom: 1rem;
+  min-height: 20vh;
+  line-height: 1.6;
 }
 
 .step a {
   color: #1d4ed8;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .step a:hover {
