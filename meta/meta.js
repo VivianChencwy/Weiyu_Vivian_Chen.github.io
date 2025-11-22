@@ -209,6 +209,9 @@ function renderScatter(commitsData) {
     .extent([[0, 0], [innerWidth, innerHeight]])
     .on('start brush end', brushed);
   brushGroup.call(brush);
+  
+  // Store brush reference for later
+  window.commitBrush = brush;
 }
 
 function updateScatterPlot(commitsData) {
@@ -221,26 +224,30 @@ function updateScatterPlot(commitsData) {
         .attr('cx', d => xScale(d.hourFrac))
         .attr('cy', d => yScale(d.dayName))
         .attr('r', 0)
-        .attr('opacity', 0)
+        .style('opacity', 0)
         .on('mouseenter', onMouseEnter)
         .on('mousemove', onMouseMove)
         .on('mouseleave', onMouseLeave)
         .call(enter => enter.transition()
           .duration(300)
           .attr('r', d => radiusScale(d.lineCount))
-          .attr('opacity', 0.75)),
-      update => update,
+          .style('opacity', null)),
+      update => update
+        .on('mouseenter', onMouseEnter)
+        .on('mousemove', onMouseMove)
+        .on('mouseleave', onMouseLeave),
       exit => exit.transition()
         .duration(300)
         .attr('r', 0)
-        .attr('opacity', 0)
+        .style('opacity', 0)
         .remove()
     )
     .call(update => update.transition()
       .duration(300)
       .attr('cx', d => xScale(d.hourFrac))
       .attr('cy', d => yScale(d.dayName))
-      .attr('r', d => radiusScale(d.lineCount)));
+      .attr('r', d => radiusScale(d.lineCount))
+      .style('opacity', null));
 }
 function onMouseEnter(event, commit) {
   tooltip.classed('hidden', false);
