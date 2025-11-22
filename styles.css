@@ -1128,13 +1128,13 @@ html.dark-mode #project-search:focus {
 
 #scatter-story {
   position: relative;
+  padding-bottom: 50vh;
 }
 
 #scatter-plot {
   position: sticky;
-  top: 0;
-  left: 0;
-  bottom: auto;
+  top: 2rem;
+  align-self: start;
   height: 50vh;
 }
 
@@ -1205,25 +1205,33 @@ html.dark-mode #project-search:focus {
 #scrolly-1,
 #scrolly-2 {
   margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  position: relative;
 }
 
 #files-plot {
   position: sticky;
-  top: 0;
-  height: 60vh;
-  overflow: auto;
+  top: 2rem;
+  height: 70vh;
+  max-height: 800px;
+  overflow-y: auto;
   padding: 1rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  align-self: start;
 }
 
 #files-story {
   position: relative;
+  padding-bottom: 50vh;
 }
 
 .file-step {
-  min-height: 40vh;
+  min-height: 30vh;
+  padding-bottom: 1rem;
 }
 
 #files dt.file-active,

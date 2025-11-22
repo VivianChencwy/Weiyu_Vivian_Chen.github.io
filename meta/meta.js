@@ -327,6 +327,11 @@ function onTimeSliderChange() {
   const slider = document.getElementById('commit-progress');
   const timeDisplay = document.getElementById('commit-time');
   
+  // Don't respond to slider changes if Scrollama just updated it
+  if (isScrollamaActive) {
+    return;
+  }
+  
   if (slider && timeDisplay && timeScale) {
     const rawValue = Number.isNaN(slider.valueAsNumber) ? Number(slider.value) : slider.valueAsNumber;
     const clampedValue = Math.min(Math.max(rawValue, 0), 100);
@@ -347,7 +352,6 @@ function onTimeSliderChange() {
     timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     
     updateScatterPlot(filteredCommits);
-    updateCommitNarrative(filteredCommits);
   }
 }
 
@@ -487,16 +491,9 @@ function generateCommitNarrative() {
 }
 
 function updateCommitNarrative(commitsToShow) {
-  // Simply show/hide steps based on what should be visible
-  d3.select('#scatter-story')
-    .selectAll('.step')
-    .style('display', function() {
-      const d = this.__data__;
-      if (!d) return 'none';
-      return commitsToShow.some(c => c.id === d.id) ? 'block' : 'none';
-    });
-  
-  console.log('Updated narrative to show', commitsToShow.length, 'commits');
+  // Don't modify the narrative - let Scrollama handle it naturally
+  // This function is now mostly a no-op
+  console.log('Narrative update requested for', commitsToShow.length, 'commits');
 }
 
 function generateFileNarrative() {
@@ -522,22 +519,28 @@ function generateFileNarrative() {
     });
 }
 
+let isScrollamaActive = false;
+
 function onCommitStepEnter(response) {
-  console.log('onCommitStepEnter called', response);
   const commit = response.element.__data__;
-  console.log('Step entered, commit:', commit);
+  console.log('Step entered, commit index:', response.index, 'direction:', response.direction);
   
   if (commit && commit.datetime) {
+    isScrollamaActive = true;
+    
+    // Find the index of this commit in the commits array
+    const commitIndex = commits.findIndex(c => c.id === commit.id);
+    
+    // Include all commits up to and including this one
     commitMaxTime = commit.datetime;
     commitProgress = timeScale(commitMaxTime);
-    filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
+    filteredCommits = commits.slice(0, commitIndex + 1);
     
-    console.log('Filtering to', filteredCommits.length, 'commits up to', commitMaxTime);
+    console.log('Filtering to', filteredCommits.length, 'commits (index', commitIndex, ') up to', commitMaxTime);
     
     updateScatterPlot(filteredCommits);
-    updateCommitNarrative(filteredCommits);
     
-    // Update slider and time display
+    // Update slider and time display without triggering change event
     const slider = document.getElementById('commit-progress');
     const timeDisplay = document.getElementById('commit-time');
     if (slider) {
@@ -550,6 +553,11 @@ function onCommitStepEnter(response) {
       });
       timeDisplay.setAttribute('datetime', commitMaxTime.toISOString());
     }
+    
+    // Allow slider to work again after a brief delay
+    setTimeout(() => {
+      isScrollamaActive = false;
+    }, 100);
   }
 }
 
@@ -572,19 +580,14 @@ function setupScrollama() {
         return;
       }
       
-      // Check if first step has data
-      const firstStep = document.querySelector('#scrolly-1 .commit-step');
-      console.log('First step element:', firstStep);
-      console.log('First step __data__:', firstStep ? firstStep.__data__ : 'none');
-      
       // Set up commit scrollytelling
       const commitScroller = window.scrollama();
       commitScroller
         .setup({
-          container: '#scrolly-1',
           step: '#scrolly-1 .commit-step',
-          offset: 0.5,
-          debug: false,  // Disable debug to remove black lines
+          offset: 0.6,
+          debug: false,
+          progress: true,
         })
         .onStepEnter(onCommitStepEnter);
       
@@ -596,10 +599,10 @@ function setupScrollama() {
         const fileScroller = window.scrollama();
         fileScroller
           .setup({
-            container: '#scrolly-2',
             step: '#scrolly-2 .file-step',
-            offset: 0.5,
+            offset: 0.6,
             debug: false,
+            progress: true,
           })
           .onStepEnter(onFileStepEnter);
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
@@ -609,7 +612,7 @@ function setupScrollama() {
       window.addEventListener('resize', () => {
         commitScroller.resize();
       });
-    }, 200);  // Increased delay to ensure data binding
+    }, 200);
   };
   
   script.onerror = () => {
