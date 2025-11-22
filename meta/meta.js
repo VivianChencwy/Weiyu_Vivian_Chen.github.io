@@ -533,17 +533,19 @@ function generateFileNarrative() {
 }
 
 function onCommitStepEnter(response) {
+  console.log('onCommitStepEnter called', response);
   const commit = response.element.__data__;
-  console.log('Step entered:', commit ? commit.datetime : 'no data');
+  console.log('Step entered, commit:', commit);
   
   if (commit && commit.datetime) {
     commitMaxTime = commit.datetime;
     commitProgress = timeScale(commitMaxTime);
     filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
     
-    console.log('Updating to show', filteredCommits.length, 'commits');
+    console.log('Filtering to', filteredCommits.length, 'commits up to', commitMaxTime);
     
     updateScatterPlot(filteredCommits);
+    updateCommitNarrative(filteredCommits);
     
     // Update slider and time display
     const slider = document.getElementById('commit-progress');
@@ -562,41 +564,64 @@ function onCommitStepEnter(response) {
 }
 
 function setupScrollama() {
-  import('https://cdn.jsdelivr.net/npm/[email protected]/+esm').then(module => {
-    const scrollama = module.default;
+  const scrollamaUrl = 'https://unpkg.com/scrollama@3.2.0/build/scrollama.min.js';
+  
+  // Load scrollama from unpkg
+  const script = document.createElement('script');
+  script.src = scrollamaUrl;
+  script.onload = () => {
+    console.log('Scrollama loaded successfully');
     
-    // Set up commit scrollytelling
-    const commitScroller = scrollama();
-    commitScroller
-      .setup({
-        container: '#scrolly-1',
-        step: '#scrolly-1 .commit-step',
-        offset: 0.5,
-        debug: false,
-      })
-      .onStepEnter(onCommitStepEnter);
-    
-    console.log('Scrollama initialized for commits');
-
-    // Set up file scrollytelling if elements exist
-    if (document.querySelector('#scrolly-2 .file-step')) {
-      const fileScroller = scrollama();
-      fileScroller
+    // Add a small delay to ensure DOM is fully ready
+    setTimeout(() => {
+      const stepsCount = document.querySelectorAll('#scrolly-1 .commit-step').length;
+      console.log('Found', stepsCount, 'commit steps');
+      
+      if (stepsCount === 0) {
+        console.error('No commit steps found! Cannot initialize Scrollama.');
+        return;
+      }
+      
+      // Set up commit scrollytelling
+      const commitScroller = window.scrollama();
+      commitScroller
         .setup({
-          container: '#scrolly-2',
-          step: '#scrolly-2 .file-step',
+          container: '#scrolly-1',
+          step: '#scrolly-1 .commit-step',
           offset: 0.5,
-          debug: false,
+          debug: true,  // Enable debug for testing
         })
-        .onStepEnter(onFileStepEnter);
-      console.log('Scrollama initialized for files');
-    }
-    
-    // Resize handler
-    window.addEventListener('resize', () => {
-      commitScroller.resize();
-    });
-  });
+        .onStepEnter(onCommitStepEnter);
+      
+      console.log('Scrollama initialized for commits with', stepsCount, 'steps');
+
+      // Set up file scrollytelling if elements exist
+      const fileStepsCount = document.querySelectorAll('#scrolly-2 .file-step').length;
+      if (fileStepsCount > 0) {
+        const fileScroller = window.scrollama();
+        fileScroller
+          .setup({
+            container: '#scrolly-2',
+            step: '#scrolly-2 .file-step',
+            offset: 0.5,
+            debug: true,
+          })
+          .onStepEnter(onFileStepEnter);
+        console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
+      }
+      
+      // Resize handler
+      window.addEventListener('resize', () => {
+        commitScroller.resize();
+      });
+    }, 100);
+  };
+  
+  script.onerror = () => {
+    console.error('Failed to load Scrollama from', scrollamaUrl);
+  };
+  
+  document.head.appendChild(script);
 }
 
 function onFileStepEnter(response) {
