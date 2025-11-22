@@ -1274,10 +1274,12 @@ html.dark-mode #project-search:focus {
 #files dt.file-active,
 #files dd.file-active {
   color: #1d4ed8;
+  transition: color 0.2s ease;
 }
 
 #files dd.file-active .loc {
   filter: brightness(1.2);
+  transition: filter 0.2s ease;
 }
 
 html.dark-mode .meta-hero {

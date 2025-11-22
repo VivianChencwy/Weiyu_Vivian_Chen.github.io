@@ -607,19 +607,30 @@ function setupScrollama() {
             step: '#scrolly-2 .file-step',
             offset: 0.5,
             debug: false,
-            threshold: 1,
+            threshold: 4,
           })
-          .onStepEnter(onFileStepEnter)
-          .onStepExit((response) => {
-            console.log('File step exited, index:', response.index, 'direction:', response.direction);
-          });
+          .onStepEnter(onFileStepEnter);
         console.log('Scrollama initialized for files with', fileStepsCount, 'steps');
+        
+        // Optimize resize handling
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            commitScroller.resize();
+            fileScroller.resize();
+          }, 150);
+        });
+      } else {
+        // Only resize commit scroller if no file scroller
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            commitScroller.resize();
+          }, 150);
+        });
       }
-      
-      // Resize handler
-      window.addEventListener('resize', () => {
-        commitScroller.resize();
-      });
     }, 200);
   };
   
@@ -632,13 +643,14 @@ function setupScrollama() {
 
 let lastFileIndex = -1;
 let fileDebounceTimer = null;
+let isFileUpdating = false;
 
 function onFileStepEnter(response) {
   const file = response.element.__data__;
   const currentIndex = response.index;
   
   // Prevent rapid re-triggering of the same step
-  if (currentIndex === lastFileIndex) {
+  if (currentIndex === lastFileIndex || isFileUpdating) {
     return;
   }
   
@@ -653,27 +665,43 @@ function onFileStepEnter(response) {
     clearTimeout(fileDebounceTimer);
   }
   
-  // Debounce the highlighting to prevent rapid updates
+  // Debounce and use requestAnimationFrame for smooth updates
   fileDebounceTimer = setTimeout(() => {
-    lastFileIndex = currentIndex;
-    highlightFileEntry(file.name);
-  }, 50);
+    isFileUpdating = true;
+    requestAnimationFrame(() => {
+      lastFileIndex = currentIndex;
+      highlightFileEntry(file.name);
+      isFileUpdating = false;
+    });
+  }, 100);
 }
 
 function highlightFileEntry(fileName) {
   if (!fileName) {
     return;
   }
-  const filesDl = d3.select('#files');
-  if (!filesDl.node()) {
-    return;
-  }
+  
+  // Use native DOM operations for better performance
+  const filesContainer = document.getElementById('files');
+  if (!filesContainer) return;
+  
   const escaped = escapeForSelector(fileName);
-  d3.selectAll('#files dt, #files dd').classed('file-active', false);
-  d3.selectAll(`#files dt[data-file="${escaped}"], #files dd[data-file="${escaped}"]`).classed('file-active', true);
-  const target = document.querySelector(`#files dt[data-file="${escaped}"]`);
+  
+  // Remove all active classes first
+  const activeElements = filesContainer.querySelectorAll('.file-active');
+  activeElements.forEach(el => el.classList.remove('file-active'));
+  
+  // Add active class to the target elements
+  const targetElements = filesContainer.querySelectorAll(`[data-file="${escaped}"]`);
+  targetElements.forEach(el => el.classList.add('file-active'));
+  
+  // Smooth scroll to the target
+  const target = filesContainer.querySelector(`dt[data-file="${escaped}"]`);
   if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
   }
 }
 
